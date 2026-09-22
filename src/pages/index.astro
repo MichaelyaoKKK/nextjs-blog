@@ -1,9 +1,9 @@
 ---
 const works = [
-  { title: '云朵小猫', note: '给朋友家的橘猫画了一张会飞的肖像。', image: 'https://picsum.photos/seed/alisa-cloud-cat/1200/900', className: 'md:col-span-2 md:row-span-2' },
-  { title: '夏日汽水', note: '把放学路上的晚风装进瓶子里。', image: 'https://picsum.photos/seed/alisa-soda/800/800', className: 'md:col-span-2' },
-  { title: '兔子邮局', note: '一封寄给月亮的信。', image: 'https://picsum.photos/seed/alisa-rabbit/800/800', className: 'md:col-span-2' },
-  { title: '花园派对', note: '花朵、朋友和一场粉色的雨。', image: 'https://picsum.photos/seed/alisa-garden/1200/700', className: 'md:col-span-4' }
+  { title: '云朵小猫', category: '动物', note: '给朋友家的橘猫画了一张会飞的肖像。', image: 'https://picsum.photos/seed/alisa-cloud-cat/1200/900', className: 'md:col-span-2 md:row-span-2' },
+  { title: '夏日汽水', category: '人物', note: '把放学路上的晚风装进瓶子里。', image: 'https://picsum.photos/seed/alisa-soda/800/800', className: 'md:col-span-2' },
+  { title: '兔子邮局', category: '漫画', note: '一封寄给月亮的信。', image: 'https://picsum.photos/seed/alisa-rabbit/800/800', className: 'md:col-span-2' },
+  { title: '花园派对', category: '人物', note: '花朵、朋友和一场粉色的雨。', image: 'https://picsum.photos/seed/alisa-garden/1200/700', className: 'md:col-span-4' }
 ];
 
 const projects = [
@@ -78,15 +78,15 @@ const projects = [
       <section id="works" class="bg-[#27223a] px-5 py-32 text-[#fffaf2] sm:px-8 md:py-48 lg:px-12">
         <div class="mx-auto max-w-7xl">
           <div class="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <h2 class="font-display text-6xl leading-none sm:text-8xl">最近画了什么？</h2>
-            <p class="max-w-sm text-lg leading-7 text-[#d5cede]">每一张画都是一个刚刚好被发现的小世界。</p>
+            <div><h2 class="font-display text-6xl leading-none sm:text-8xl">作品小宇宙</h2><div class="mt-6 flex gap-2 text-sm font-bold"><span class="rounded-full border border-white/50 px-3 py-1">人物</span><span class="rounded-full border border-white/50 px-3 py-1">动物</span><span class="rounded-full border border-white/50 px-3 py-1">漫画</span></div></div>
+            <p class="max-w-sm text-lg leading-7 text-[#d5cede]">首屏代表作集合。每一张画都是一个刚刚好被发现的小世界。</p>
           </div>
           <div class="grid grid-flow-dense auto-rows-[13rem] gap-4 md:grid-cols-4">
             {works.map((work) => (
               <article class:list={['work-card group relative overflow-hidden rounded-[2rem] bg-[#423d53]', work.className]}>
                 <img src={work.image} alt={work.title} class="h-full w-full object-cover opacity-85 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-100" loading="lazy" />
                 <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#191622]/90 to-transparent p-6 pt-20">
-                  <h3 class="font-display text-3xl">{work.title}</h3><p class="mt-1 text-sm text-[#f3edf5]">{work.note}</p>
+                  <p class="text-xs font-bold tracking-[0.15em] text-[#ffcf69]">{work.category}</p><h3 class="font-display text-3xl">{work.title}</h3><p class="mt-1 text-sm text-[#f3edf5]">{work.note}</p>
                 </div>
               </article>
             ))}
@@ -110,10 +110,7 @@ const projects = [
 
       <section id="contact" class="px-5 pb-8 pt-20 sm:px-8 lg:px-12">
         <div class="mx-auto max-w-7xl rounded-[3rem] bg-[#ef596f] px-6 py-20 text-white sm:px-12 md:py-28 lg:px-20">
-          <div class="grid gap-12 lg:grid-cols-2">
-            <div><p class="font-bold tracking-[0.18em]">来和我打个招呼</p><h2 class="mt-5 font-display text-6xl leading-none sm:text-8xl">一起画点<br />有趣的吧。</h2><a class="mt-8 inline-block text-xl font-bold underline decoration-2 underline-offset-8" href="mailto:hello@alisa.art">hello@alisa.art</a></div>
-            <form class="grid gap-4" action="mailto:hello@alisa.art" method="post" enctype="text/plain"><label class="sr-only" for="name">你的名字</label><input id="name" name="name" required placeholder="你的名字" class="rounded-2xl bg-white/15 px-5 py-4 placeholder:text-white/75 outline-none ring-white/0 transition focus:ring-2" /><label class="sr-only" for="message">想说的话</label><textarea id="message" name="message" required rows="5" placeholder="想对我说的话" class="rounded-2xl bg-white/15 px-5 py-4 placeholder:text-white/75 outline-none ring-white/0 transition focus:ring-2"></textarea><button class="rounded-full bg-[#27223a] px-7 py-4 font-bold text-white transition hover:-translate-y-1 hover:bg-[#fffaf2] hover:text-[#27223a]" type="submit">发送留言</button></form>
-          </div>
+          <p class="font-bold tracking-[0.18em]">安心浏览作品</p><h2 class="mt-5 max-w-4xl font-display text-6xl leading-none sm:text-8xl">把喜欢的画<br />留在这里就好。</h2><p class="mt-8 max-w-2xl text-lg leading-8">为了保护 Alisa 的隐私，网站不公开真实邮箱、学校、常去地点或生活规律，也不设置会收集访客信息的留言表单。若未来需要联系，将由家长选择并管理合适的渠道。</p><span class="mt-8 inline-block rounded-full border border-white/60 px-5 py-3 font-bold">联系渠道由家长管理</span>
         </div>
         <footer class="mx-auto flex max-w-7xl flex-col gap-3 px-2 py-10 text-sm font-medium text-[#6e6878] sm:flex-row sm:justify-between dark:text-[#c9c1d0]"><span>Alisa 的小宇宙</span><span>用好奇心和颜色慢慢长大。</span></footer>
       </section>

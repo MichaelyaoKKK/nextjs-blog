@@ -34,6 +34,16 @@ test('homepage copy has corresponding Pages CMS fields', () => {
   assert.match(source, /src=\{page\.heroImage \|\|/);
 });
 
+test('contact card is compact and shows only the parent email below its title', () => {
+  assert.equal(page.contactNote, 'Alisa妈妈邮箱：luckyalicelin@gmail.com');
+  assert.ok(!('contactEyebrow' in page));
+  assert.ok(!('contactBody' in page));
+  assert.doesNotMatch(config, /name: contactEyebrow|name: contactBody/);
+  assert.match(source, /max-w-xl rounded-\[2rem\] bg-\[#ef596f\]/);
+  assert.match(source, /\{page\.contactTitleSecond\}<\/h2>[\s\S]*\{page\.contactNote\}/);
+  assert.doesNotMatch(source, /page\.contactEyebrow|page\.contactBody/);
+});
+
 test('works and daily entries expose editable text and optional images', () => {
   assert.ok(works.length >= 4);
   assert.ok(daily.length >= 3);

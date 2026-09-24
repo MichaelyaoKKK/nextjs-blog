@@ -36,11 +36,9 @@ content:
       - { name: dailyTitleSecond, label: 日常区标题第二行, type: string, required: true }
       - { name: dailyIntro, label: 日常区介绍, type: text, required: true }
       - { name: dailyCardLink, label: 日常卡片链接文字, type: string, required: true }
-      - { name: contactEyebrow, label: 联系区短句, type: string, required: true }
       - { name: contactTitleFirst, label: 联系区标题第一行, type: string, required: true }
       - { name: contactTitleSecond, label: 联系区标题第二行, type: string, required: true }
-      - { name: contactBody, label: 联系区正文, type: text, required: true }
-      - { name: contactNote, label: 联系区提示, type: string, required: true }
+      - { name: contactNote, label: 家长联系邮箱, type: string, required: true }
       - { name: footerNote, label: 页脚短句, type: string, required: true }
 
   - name: works

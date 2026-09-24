@@ -8,7 +8,7 @@
 
 ## 内容管理准备
 
-- `src/data/page.json`：首页、关于我、区块介绍、联系提示等文字，以及首屏图片。
+- `src/data/page.json`：首页、关于我、区块介绍、家长联系邮箱等文字，以及首屏图片。
 - `src/data/works.json`：作品名称、分类、介绍和图片；可添加或调整卡片顺序。
 - `src/data/daily.json`：日常卡片文字和图片。
 - `.pages.yml`：Pages CMS 的编辑字段与图片上传位置。上传图片将存入 `public/images/`，页面使用 `/images/` 路径。

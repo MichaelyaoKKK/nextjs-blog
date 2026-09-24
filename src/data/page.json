@@ -1,7 +1,7 @@
 {
   "siteTitle": "Alisa 的小宇宙",
   "brandName": "Alisa",
-  "metaDescription": "Alisa 的绘画与日常个人主页。",
+  "metaDescription": "Alisa 的绘画与日常个人主页",
   "languageSwitcherLabel": "选择语言",
   "backToTopLabel": "返回首页",
   "themeToggleLabel": "切换明暗模式",
@@ -16,13 +16,17 @@
   "heroIntro": "嗨，我是 Alisa。12 岁，喜欢把人物、动物和脑袋里突然冒出来的故事画在纸上，也喜欢把每一天的小惊喜收藏起来。",
   "heroWorksButton": "看看我的作品",
   "heroDailyButton": "我的日常",
-  "heroImage": "",
   "heroImageAlt": "Alisa 的手绘风肖像",
   "heroBadge": "画画中",
   "aboutTitleFirst": "从幼儿园起，",
   "aboutTitleSecond": "我就在画画。",
   "aboutBody": "第一支蜡笔画的是一只圆圆的小猫。后来，我参加过业余绘画比赛，也常常为同学和朋友画他们家的宠物。现在，画画依然是我认识世界、分享快乐的方式。",
-  "aboutTags": ["人物", "动物", "漫画", "想象力"],
+  "aboutTags": [
+    "人物",
+    "动物",
+    "漫画",
+    "想象力"
+  ],
   "worksTitle": "作品小宇宙",
   "worksIntro": "首屏代表作集合。每一张画都是一个刚刚好被发现的小世界。",
   "dailyTitleFirst": "日常像",
@@ -31,6 +35,6 @@
   "dailyCardLink": "想看更多作品",
   "contactTitleFirst": "把喜欢的画",
   "contactTitleSecond": "留在这里就好。",
-  "contactNote": "Alisa妈妈邮箱：luckyalicelin@gmail.com",
-  "footerNote": "用好奇心和颜色慢慢长大。"
+  "contactNote": "Alisa还是个小孩，如果您喜欢她的画，请联系Alisa妈咪邮箱：luckyalicelin@gmail.com",
+  "footerNote": "用好奇心和颜色慢慢长大"
 }

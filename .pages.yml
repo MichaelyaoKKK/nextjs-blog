@@ -6,7 +6,7 @@ media:
 
 content:
   - name: homepage
-    label: 首页与页面文字
+    label: 首页与页面文字（中文）
     type: file
     path: src/data/page.json
     format: json
@@ -14,6 +14,11 @@ content:
       - { name: siteTitle, label: 网站标题, type: string, required: true }
       - { name: brandName, label: 品牌名称, type: string, required: true }
       - { name: metaDescription, label: 页面简介, type: text, required: true }
+      - { name: languageSwitcherLabel, label: 语言切换说明, type: string, required: true }
+      - { name: backToTopLabel, label: 返回顶部说明, type: string, required: true }
+      - { name: themeToggleLabel, label: 主题切换说明, type: string, required: true }
+      - { name: themeDarkLabel, label: 深色模式按钮, type: string, required: true }
+      - { name: themeLightLabel, label: 浅色模式按钮, type: string, required: true }
       - { name: navAbout, label: 关于我导航, type: string, required: true }
       - { name: navWorks, label: 作品导航, type: string, required: true }
       - { name: navContact, label: 联系导航, type: string, required: true }
@@ -23,7 +28,87 @@ content:
       - { name: heroIntro, label: 首屏介绍, type: text, required: true }
       - { name: heroWorksButton, label: 作品按钮文字, type: string, required: true }
       - { name: heroDailyButton, label: 日常按钮文字, type: string, required: true }
-      - { name: heroImage, label: 首屏图片, type: image }
+      - { name: heroImage, label: 首屏图片（三语共用）, type: image }
+      - { name: heroImageAlt, label: 首屏图片说明, type: string, required: true }
+      - { name: heroBadge, label: 首屏贴纸文字, type: string, required: true }
+      - { name: aboutTitleFirst, label: 关于我标题第一行, type: string, required: true }
+      - { name: aboutTitleSecond, label: 关于我标题第二行, type: string, required: true }
+      - { name: aboutBody, label: 关于我正文, type: text, required: true }
+      - { name: aboutTags, label: 关于我标签, type: string, list: true }
+      - { name: worksTitle, label: 作品区标题, type: string, required: true }
+      - { name: worksIntro, label: 作品区介绍, type: text, required: true }
+      - { name: dailyTitleFirst, label: 日常区标题第一行, type: string, required: true }
+      - { name: dailyTitleSecond, label: 日常区标题第二行, type: string, required: true }
+      - { name: dailyIntro, label: 日常区介绍, type: text, required: true }
+      - { name: dailyCardLink, label: 日常卡片链接文字, type: string, required: true }
+      - { name: contactTitleFirst, label: 联系区标题第一行, type: string, required: true }
+      - { name: contactTitleSecond, label: 联系区标题第二行, type: string, required: true }
+      - { name: contactNote, label: 家长联系邮箱, type: string, required: true }
+      - { name: footerNote, label: 页脚短句, type: string, required: true }
+
+  - name: homepage-en
+    label: 首页与页面文字（English）
+    type: file
+    path: src/data/page.en.json
+    format: json
+    fields:
+      - { name: siteTitle, label: 网站标题, type: string, required: true }
+      - { name: brandName, label: 品牌名称, type: string, required: true }
+      - { name: metaDescription, label: 页面简介, type: text, required: true }
+      - { name: languageSwitcherLabel, label: 语言切换说明, type: string, required: true }
+      - { name: backToTopLabel, label: 返回顶部说明, type: string, required: true }
+      - { name: themeToggleLabel, label: 主题切换说明, type: string, required: true }
+      - { name: themeDarkLabel, label: 深色模式按钮, type: string, required: true }
+      - { name: themeLightLabel, label: 浅色模式按钮, type: string, required: true }
+      - { name: navAbout, label: 关于我导航, type: string, required: true }
+      - { name: navWorks, label: 作品导航, type: string, required: true }
+      - { name: navContact, label: 联系导航, type: string, required: true }
+      - { name: heroEyebrow, label: 首屏短句, type: string, required: true }
+      - { name: heroTitleFirst, label: 首屏标题第一行, type: string, required: true }
+      - { name: heroTitleSecond, label: 首屏标题第二行, type: string, required: true }
+      - { name: heroIntro, label: 首屏介绍, type: text, required: true }
+      - { name: heroWorksButton, label: 作品按钮文字, type: string, required: true }
+      - { name: heroDailyButton, label: 日常按钮文字, type: string, required: true }
+      - { name: heroImageAlt, label: 首屏图片说明, type: string, required: true }
+      - { name: heroBadge, label: 首屏贴纸文字, type: string, required: true }
+      - { name: aboutTitleFirst, label: 关于我标题第一行, type: string, required: true }
+      - { name: aboutTitleSecond, label: 关于我标题第二行, type: string, required: true }
+      - { name: aboutBody, label: 关于我正文, type: text, required: true }
+      - { name: aboutTags, label: 关于我标签, type: string, list: true }
+      - { name: worksTitle, label: 作品区标题, type: string, required: true }
+      - { name: worksIntro, label: 作品区介绍, type: text, required: true }
+      - { name: dailyTitleFirst, label: 日常区标题第一行, type: string, required: true }
+      - { name: dailyTitleSecond, label: 日常区标题第二行, type: string, required: true }
+      - { name: dailyIntro, label: 日常区介绍, type: text, required: true }
+      - { name: dailyCardLink, label: 日常卡片链接文字, type: string, required: true }
+      - { name: contactTitleFirst, label: 联系区标题第一行, type: string, required: true }
+      - { name: contactTitleSecond, label: 联系区标题第二行, type: string, required: true }
+      - { name: contactNote, label: 家长联系邮箱, type: string, required: true }
+      - { name: footerNote, label: 页脚短句, type: string, required: true }
+
+  - name: homepage-fr
+    label: 首页与页面文字（Français）
+    type: file
+    path: src/data/page.fr.json
+    format: json
+    fields:
+      - { name: siteTitle, label: 网站标题, type: string, required: true }
+      - { name: brandName, label: 品牌名称, type: string, required: true }
+      - { name: metaDescription, label: 页面简介, type: text, required: true }
+      - { name: languageSwitcherLabel, label: 语言切换说明, type: string, required: true }
+      - { name: backToTopLabel, label: 返回顶部说明, type: string, required: true }
+      - { name: themeToggleLabel, label: 主题切换说明, type: string, required: true }
+      - { name: themeDarkLabel, label: 深色模式按钮, type: string, required: true }
+      - { name: themeLightLabel, label: 浅色模式按钮, type: string, required: true }
+      - { name: navAbout, label: 关于我导航, type: string, required: true }
+      - { name: navWorks, label: 作品导航, type: string, required: true }
+      - { name: navContact, label: 联系导航, type: string, required: true }
+      - { name: heroEyebrow, label: 首屏短句, type: string, required: true }
+      - { name: heroTitleFirst, label: 首屏标题第一行, type: string, required: true }
+      - { name: heroTitleSecond, label: 首屏标题第二行, type: string, required: true }
+      - { name: heroIntro, label: 首屏介绍, type: text, required: true }
+      - { name: heroWorksButton, label: 作品按钮文字, type: string, required: true }
+      - { name: heroDailyButton, label: 日常按钮文字, type: string, required: true }
       - { name: heroImageAlt, label: 首屏图片说明, type: string, required: true }
       - { name: heroBadge, label: 首屏贴纸文字, type: string, required: true }
       - { name: aboutTitleFirst, label: 关于我标题第一行, type: string, required: true }
@@ -49,9 +134,15 @@ content:
     list: true
     fields:
       - { name: title, label: 作品名称, type: string, required: true }
+      - { name: titleEn, label: 作品名称（English）, type: string, required: true }
+      - { name: titleFr, label: 作品名称（Français）, type: string, required: true }
       - { name: category, label: 分类, type: string, required: true }
+      - { name: categoryEn, label: 分类（English）, type: string, required: true }
+      - { name: categoryFr, label: 分类（Français）, type: string, required: true }
       - { name: note, label: 作品介绍, type: text, required: true }
-      - { name: image, label: 作品图片, type: image }
+      - { name: noteEn, label: 作品介绍（English）, type: text, required: true }
+      - { name: noteFr, label: 作品介绍（Français）, type: text, required: true }
+      - { name: image, label: 作品图片（三语共用）, type: image }
 
   - name: daily
     label: 日常像一盒彩笔
@@ -61,5 +152,9 @@ content:
     list: true
     fields:
       - { name: title, label: 日常标题, type: string, required: true }
+      - { name: titleEn, label: 日常标题（English）, type: string, required: true }
+      - { name: titleFr, label: 日常标题（Français）, type: string, required: true }
       - { name: copy, label: 日常内容, type: text, required: true }
-      - { name: image, label: 日常图片, type: image }
+      - { name: copyEn, label: 日常内容（English）, type: text, required: true }
+      - { name: copyFr, label: 日常内容（Français）, type: text, required: true }
+      - { name: image, label: 日常图片（三语共用）, type: image }

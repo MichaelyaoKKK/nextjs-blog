@@ -1,17 +1,29 @@
 [
   {
     "title": "动物朋友肖像",
+    "titleEn": "Animal Friends' Portraits",
+    "titleFr": "Portraits d’animaux",
     "copy": "为朋友们的宠物画专属的小故事。",
+    "copyEn": "Little stories drawn just for friends' pets.",
+    "copyFr": "De petites histoires dessinées pour les animaux de mes amis.",
     "image": ""
   },
   {
     "title": "我的漫画角",
-    "copy": "每周更新一格，记录脑袋里发生的奇妙事。",
+    "titleEn": "My Comic Corner",
+    "titleFr": "Mon coin BD",
+    "copy": "偶尔画上一格，记录脑袋里发生的奇妙事。",
+    "copyEn": "Sometimes I draw a panel to capture a story from my imagination.",
+    "copyFr": "Parfois, je dessine une case pour raconter une histoire imaginée.",
     "image": ""
   },
   {
     "title": "颜色日记",
+    "titleEn": "Color Diary",
+    "titleFr": "Journal de couleurs",
     "copy": "用一组颜色收藏每天最喜欢的瞬间。",
+    "copyEn": "A palette of colors for my favorite moments.",
+    "copyFr": "Une palette de couleurs pour garder mes moments préférés.",
     "image": ""
   }
 ]

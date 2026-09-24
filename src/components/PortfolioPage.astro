@@ -1,0 +1,181 @@
+---
+import pageZh from '../data/page.json';
+import pageEn from '../data/page.en.json';
+import pageFr from '../data/page.fr.json';
+import works from '../data/works.json';
+import daily from '../data/daily.json';
+
+interface Props {
+  locale: 'zh' | 'en' | 'fr';
+}
+
+const { locale } = Astro.props;
+const page = { zh: pageZh, en: pageEn, fr: pageFr }[locale];
+const htmlLang = { zh: 'zh-CN', en: 'en', fr: 'fr' }[locale];
+const languages = [
+  { code: 'zh', label: '中', href: '/' },
+  { code: 'en', label: 'EN', href: '/en/' },
+  { code: 'fr', label: 'FR', href: '/fr/' }
+] as const;
+
+const workLayouts = ['md:col-span-2 md:row-span-2', 'md:col-span-2', 'md:col-span-2', 'md:col-span-4'];
+const workPlaceholders = [
+  'https://picsum.photos/seed/alisa-cloud-cat/1200/900',
+  'https://picsum.photos/seed/alisa-soda/800/800',
+  'https://picsum.photos/seed/alisa-rabbit/800/800',
+  'https://picsum.photos/seed/alisa-garden/1200/700'
+];
+const dailyPlaceholders = [
+  'https://picsum.photos/seed/alisa-pet-portrait/1000/700',
+  'https://picsum.photos/seed/alisa-comic/1000/700',
+  'https://picsum.photos/seed/alisa-color-diary/1000/700'
+];
+const aboutTagClasses = [
+  'bg-[#ffe6eb] text-[#be3650]',
+  'bg-[#e1f2ed] text-[#317368]',
+  'bg-[#fff0cf] text-[#8b5c08]',
+  'bg-[#e9e4ff] text-[#56458d]'
+];
+const displayedWorks = works.map((work) => ({
+  title: locale === 'en' ? work.titleEn : locale === 'fr' ? work.titleFr : work.title,
+  category: locale === 'en' ? work.categoryEn : locale === 'fr' ? work.categoryFr : work.category,
+  note: locale === 'en' ? work.noteEn : locale === 'fr' ? work.noteFr : work.note,
+  image: work.image
+}));
+const displayedDaily = daily.map((item) => ({
+  title: locale === 'en' ? item.titleEn : locale === 'fr' ? item.titleFr : item.title,
+  copy: locale === 'en' ? item.copyEn : locale === 'fr' ? item.copyFr : item.copy,
+  image: item.image
+}));
+const availableCategories = [...new Set(displayedWorks.map((work) => work.category))];
+const categories = [
+  ...page.aboutTags.filter((category) => availableCategories.includes(category)),
+  ...availableCategories.filter((category) => !page.aboutTags.includes(category))
+];
+---
+
+<!doctype html>
+<html lang={htmlLang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={page.metaDescription} />
+    <title>{page.siteTitle}</title>
+    <link rel="alternate" hreflang="zh-CN" href="/" />
+    <link rel="alternate" hreflang="en" href="/en/" />
+    <link rel="alternate" hreflang="fr" href="/fr/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <script is:inline src="https://cdn.tailwindcss.com"></script>
+    <script is:inline>
+      tailwind.config = { theme: { extend: { fontFamily: { display: ['Cabin Sketch', 'cursive'], body: ['Noto Sans SC', 'sans-serif'] } } } }
+    </script>
+  </head>
+  <body class="bg-[#fffaf2] font-body text-[#27223a] antialiased transition-colors duration-500 dark:bg-[#1d1c2b] dark:text-[#fff6ec]">
+    <main class="w-full max-w-full overflow-x-hidden">
+      <nav class="fixed left-1/2 top-5 z-50 flex w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2 items-center justify-between rounded-full border border-white/70 bg-[#fffaf2]/85 px-4 py-3 shadow-[0_12px_40px_rgba(61,37,71,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-[#29263b]/85 sm:px-6">
+        <a href="#top" class="flex items-center gap-2 font-display text-2xl text-[#ef596f]" aria-label={page.backToTopLabel}>
+          <span class="grid h-9 w-9 place-items-center rounded-full bg-[#ffcf69] text-lg text-[#27223a]">A</span>{page.brandName}
+        </a>
+        <div class="hidden items-center gap-6 text-sm font-bold md:flex">
+          <a class="hover:text-[#ef596f]" href="#about">{page.navAbout}</a>
+          <a class="hover:text-[#ef596f]" href="#works">{page.navWorks}</a>
+          <a class="hover:text-[#ef596f]" href="#contact">{page.navContact}</a>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <div class="flex items-center rounded-full border border-[#27223a]/15 p-1 dark:border-white/25" role="group" aria-label={page.languageSwitcherLabel}>
+            {languages.map((language) => (
+              <a href={language.href} lang={language.code === 'zh' ? 'zh-CN' : language.code} aria-current={locale === language.code ? 'page' : undefined} class:list={['rounded-full px-2 py-1 text-xs font-bold transition-colors sm:px-2.5', locale === language.code ? 'bg-[#ef596f] text-white' : 'text-[#27223a] hover:bg-[#ffe6eb] dark:text-white dark:hover:bg-white/15']}>{language.label}</a>
+            ))}
+          </div>
+          <button id="theme-toggle" class="grid h-10 w-10 place-items-center rounded-full bg-[#27223a] text-sm font-bold text-white transition-transform hover:scale-110 dark:bg-[#ffcf69] dark:text-[#27223a]" aria-label={page.themeToggleLabel} data-dark-label={page.themeDarkLabel} data-light-label={page.themeLightLabel}>{page.themeDarkLabel}</button>
+        </div>
+      </nav>
+
+      <section id="top" class="relative min-h-screen px-5 pb-16 pt-36 sm:px-8 lg:px-12">
+        <div class="absolute inset-x-0 top-0 -z-10 h-[38rem] bg-[radial-gradient(circle_at_15%_28%,rgba(255,205,103,.7),transparent_25%),radial-gradient(circle_at_84%_14%,rgba(239,89,111,.34),transparent_25%),radial-gradient(circle_at_62%_70%,rgba(159,216,203,.5),transparent_28%)]"></div>
+        <div class="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-8">
+          <div class="order-2 lg:order-1">
+            <p class="mb-5 font-bold tracking-[0.18em] text-[#ef596f]">{page.heroEyebrow}</p>
+            <h1 class="max-w-6xl font-display text-[clamp(3.6rem,8vw,8.2rem)] leading-[0.84] tracking-[-0.055em] text-[#27223a] dark:text-[#fff6ec]">{page.heroTitleFirst}<br />{page.heroTitleSecond}</h1>
+            <p class="mt-8 max-w-xl text-lg leading-8 text-[#5c566a] dark:text-[#e6dfea]">{page.heroIntro}</p>
+            <div class="mt-9 flex flex-wrap gap-3">
+              <a href="#works" class="rounded-full bg-[#27223a] px-7 py-4 font-bold text-white transition duration-300 hover:-translate-y-1 hover:bg-[#ef596f] dark:bg-[#ffcf69] dark:text-[#27223a]">{page.heroWorksButton}</a>
+              <a href="#daily" class="rounded-full border-2 border-[#27223a] px-7 py-4 font-bold transition duration-300 hover:-translate-y-1 hover:bg-[#27223a] hover:text-white dark:border-[#fff6ec] dark:hover:bg-[#fff6ec] dark:hover:text-[#27223a]">{page.heroDailyButton}</a>
+            </div>
+          </div>
+          <div class="hero-art order-1 relative mx-auto aspect-square w-full max-w-md lg:order-2">
+            <div class="absolute inset-0 rotate-6 rounded-[42%_58%_49%_51%/43%_42%_58%_57%] bg-[#ffcf69]"></div>
+            <img class="relative h-full w-full -rotate-3 rounded-[55%_45%_40%_60%/45%_55%_45%_55%] object-cover mix-blend-multiply contrast-110 saturate-125 dark:mix-blend-normal" src={pageZh.heroImage || 'https://picsum.photos/seed/alisa-portrait/1000/1000'} alt={page.heroImageAlt} />
+            <div class="absolute -bottom-5 -left-6 rounded-[2rem] bg-[#ef596f] px-5 py-4 font-display text-3xl text-white shadow-xl">{page.heroBadge}</div>
+            <div class="absolute -right-4 top-10 h-16 w-16 rounded-full border-[10px] border-[#9fd8cb]"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="px-5 py-32 sm:px-8 md:py-48 lg:px-12">
+        <div class="mx-auto grid max-w-6xl gap-12 md:grid-cols-[.7fr_1.3fr] md:items-start">
+          <h2 class="font-display text-6xl leading-none text-[#ef596f] sm:text-7xl">{page.aboutTitleFirst}<br />{page.aboutTitleSecond}</h2>
+          <div>
+            <p class="reveal-text text-2xl font-medium leading-relaxed text-[#40394c] dark:text-[#f1eaf4]">{page.aboutBody}</p>
+            <div class="mt-10 grid grid-cols-2 gap-3 text-sm font-bold sm:grid-cols-4">
+              {page.aboutTags.map((tag, index) => <span class:list={['rounded-2xl p-4', aboutTagClasses[index % aboutTagClasses.length]]}>{tag}</span>)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="works" class="bg-[#27223a] px-5 py-32 text-[#fffaf2] sm:px-8 md:py-48 lg:px-12">
+        <div class="mx-auto max-w-7xl">
+          <div class="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div><h2 class="font-display text-6xl leading-none sm:text-8xl">{page.worksTitle}</h2><div class="mt-6 flex gap-2 text-sm font-bold">{categories.map((category) => <span class="rounded-full border border-white/50 px-3 py-1">{category}</span>)}</div></div>
+            <p class="max-w-sm text-lg leading-7 text-[#d5cede]">{page.worksIntro}</p>
+          </div>
+          <div class="grid grid-flow-dense auto-rows-[13rem] gap-4 md:grid-cols-4">
+            {displayedWorks.map((work, index) => (
+              <article class:list={['work-card group relative overflow-hidden rounded-[2rem] bg-[#423d53]', workLayouts[index] || 'md:col-span-2']}>
+                <img src={work.image || workPlaceholders[index % workPlaceholders.length]} alt={work.title} class="h-full w-full object-cover opacity-85 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-100" loading="lazy" />
+                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#191622]/90 to-transparent p-6 pt-20">
+                  <p class="text-xs font-bold tracking-[0.15em] text-[#ffcf69]">{work.category}</p><h3 class="font-display text-3xl">{work.title}</h3><p class="mt-1 text-sm text-[#f3edf5]">{work.note}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="daily" class="gallery-section px-5 py-32 sm:px-8 md:py-48 lg:px-12">
+        <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.8fr_1.2fr]">
+          <div class="gallery-title lg:sticky lg:top-36 lg:h-fit"><h2 class="font-display text-6xl leading-none text-[#ef596f] sm:text-8xl">{page.dailyTitleFirst}<br />{page.dailyTitleSecond}</h2><p class="mt-7 max-w-sm text-lg leading-8 text-[#5c566a] dark:text-[#e6dfea]">{page.dailyIntro}</p></div>
+          <div class="space-y-6">
+            {displayedDaily.map((project, index) => (
+              <article class="daily-card group grid overflow-hidden rounded-[2rem] bg-[#f4e7dc] md:grid-cols-[.85fr_1.15fr] dark:bg-[#302d40]">
+                <div class="overflow-hidden"><img src={project.image || dailyPlaceholders[index % dailyPlaceholders.length]} alt={project.title} class="h-full min-h-56 w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" /></div>
+                <div class="flex flex-col justify-between p-7 sm:p-9"><div><h3 class="font-display text-4xl text-[#27223a] dark:text-[#fff6ec]">{project.title}</h3><p class="mt-4 leading-7 text-[#5c566a] dark:text-[#e6dfea]">{project.copy}</p></div><a href="#contact" class="mt-8 inline-block font-bold text-[#ef596f]">{page.dailyCardLink}</a></div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="px-5 pb-8 pt-12 sm:px-8 lg:px-12">
+        <div class="mx-auto max-w-xl rounded-[2rem] bg-[#ef596f] px-6 py-9 text-white sm:px-10 sm:py-11">
+          <h2 class="font-display text-4xl leading-none sm:text-5xl">{page.contactTitleFirst}<br />{page.contactTitleSecond}</h2>
+          <span class="mt-6 inline-block max-w-full break-all rounded-full border border-white/60 px-4 py-3 text-sm font-bold sm:text-base">{page.contactNote}</span>
+        </div>
+        <footer class="mx-auto flex max-w-7xl flex-col gap-3 px-2 py-10 text-sm font-medium text-[#6e6878] sm:flex-row sm:justify-between dark:text-[#c9c1d0]"><span>{page.siteTitle}</span><span>{page.footerNote}</span></footer>
+      </section>
+    </main>
+
+    <script>
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      gsap.registerPlugin(ScrollTrigger);
+      const toggle = document.querySelector<HTMLButtonElement>('#theme-toggle');
+      toggle?.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); toggle.textContent = document.documentElement.classList.contains('dark') ? toggle.dataset.lightLabel || '' : toggle.dataset.darkLabel || ''; });
+      gsap.utils.toArray<HTMLElement>('.work-card, .daily-card').forEach((card) => gsap.fromTo(card, { scale: 0.88, opacity: 0.25 }, { scale: 1, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 88%', end: 'bottom 25%', scrub: 0.6 } }));
+      gsap.fromTo('.reveal-text', { opacity: 0.12 }, { opacity: 1, scrollTrigger: { trigger: '.reveal-text', start: 'top 85%', end: 'bottom 50%', scrub: 0.8 } });
+    </script>
+  </body>
+</html>

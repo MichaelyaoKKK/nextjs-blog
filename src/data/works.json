@@ -1,26 +1,50 @@
 [
   {
     "title": "云朵小猫",
+    "titleEn": "Cloud Kitten",
+    "titleFr": "Chaton dans les nuages",
     "category": "动物",
+    "categoryEn": "Animals",
+    "categoryFr": "Animaux",
     "note": "给朋友家的橘猫画了一张会飞的肖像。",
+    "noteEn": "A flying portrait of a friend's orange cat.",
+    "noteFr": "Le portrait volant du chat roux d’un ami.",
     "image": ""
   },
   {
     "title": "夏日汽水",
+    "titleEn": "Summer Soda",
+    "titleFr": "Limonade d’été",
     "category": "人物",
+    "categoryEn": "People",
+    "categoryFr": "Personnages",
     "note": "把放学路上的晚风装进瓶子里。",
+    "noteEn": "A summer breeze, bottled up in a drawing.",
+    "noteFr": "Une brise d’été mise en bouteille, sur le papier.",
     "image": ""
   },
   {
     "title": "兔子邮局",
+    "titleEn": "Rabbit Post Office",
+    "titleFr": "La poste des lapins",
     "category": "漫画",
+    "categoryEn": "Comics",
+    "categoryFr": "BD",
     "note": "一封寄给月亮的信。",
+    "noteEn": "A letter addressed to the moon.",
+    "noteFr": "Une lettre adressée à la lune.",
     "image": ""
   },
   {
     "title": "花园派对",
+    "titleEn": "Garden Party",
+    "titleFr": "Fête au jardin",
     "category": "人物",
+    "categoryEn": "People",
+    "categoryFr": "Personnages",
     "note": "花朵、朋友和一场粉色的雨。",
+    "noteEn": "Flowers, friends, and a shower of pink rain.",
+    "noteFr": "Des fleurs, des amis et une pluie rose.",
     "image": ""
   }
 ]

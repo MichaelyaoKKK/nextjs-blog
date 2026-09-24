@@ -2,64 +2,73 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, stat } from 'node:fs/promises';
 
-const source = await readFile(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
-const config = await readFile(new URL('../.pages.yml', import.meta.url), 'utf8');
-const page = JSON.parse(await readFile(new URL('../src/data/page.json', import.meta.url), 'utf8'));
-const works = JSON.parse(await readFile(new URL('../src/data/works.json', import.meta.url), 'utf8'));
-const daily = JSON.parse(await readFile(new URL('../src/data/daily.json', import.meta.url), 'utf8'));
+const read = async (path) => readFile(new URL(path, import.meta.url), 'utf8');
+const source = await read('../src/components/PortfolioPage.astro');
+const config = await read('../.pages.yml');
+const pages = Object.fromEntries(await Promise.all(
+  ['zh', 'en', 'fr'].map(async (locale) => [
+    locale,
+    JSON.parse(await read(`../src/data/page${locale === 'zh' ? '' : `.${locale}`}.json`))
+  ])
+));
+const works = JSON.parse(await read('../src/data/works.json'));
+const daily = JSON.parse(await read('../src/data/daily.json'));
 
-test('Astro is the sole homepage source and reads editable content', async () => {
+test('three static routes share one homepage component', async () => {
   await assert.rejects(stat(new URL('../index.html', import.meta.url)), { code: 'ENOENT' });
-  for (const file of ['page', 'works', 'daily']) {
-    assert.match(source, new RegExp(`import ${file} from '../data/${file}\\.json'`));
+  for (const [route, locale] of [['../src/pages/index.astro', 'zh'], ['../src/pages/en/index.astro', 'en'], ['../src/pages/fr/index.astro', 'fr']]) {
+    const wrapper = await read(route);
+    assert.match(wrapper, /PortfolioPage\.astro/);
+    assert.match(wrapper, new RegExp(`locale="${locale}"`));
   }
-  for (const id of ['about', 'works', 'daily', 'contact']) {
-    assert.match(source, new RegExp(`id="${id}"`));
-  }
+  for (const id of ['about', 'works', 'daily', 'contact']) assert.match(source, new RegExp(`id="${id}"`));
   assert.match(source, /ScrollTrigger/);
   assert.doesNotMatch(source, /mailto:|<form\b/i);
 });
 
-test('homepage copy has corresponding Pages CMS fields', () => {
-  for (const [key, value] of Object.entries(page)) {
-    assert.match(config, new RegExp(`name: ${key}(?:,|\\s)`));
-    assert.ok(source.includes(`page.${key}`), `${key} must appear in the homepage`);
-    if (Array.isArray(value)) {
-      assert.ok(value.every((item) => typeof item === 'string'));
-    } else {
-      assert.equal(typeof value, 'string');
+test('language switcher uses accessible localized static routes', () => {
+  assert.match(source, /<html lang=\{htmlLang\}/);
+  for (const route of ['/', '/en/', '/fr/']) assert.ok(source.includes(`href: '${route}'`));
+  for (const locale of ['zh-CN', 'en', 'fr']) assert.ok(source.includes(`hreflang="${locale}"`));
+  assert.match(source, /aria-current=\{locale === language\.code \? 'page'/);
+  assert.match(source, /aria-label=\{page\.languageSwitcherLabel\}/);
+});
+
+test('all localized page fields are editable and populated', () => {
+  const chineseKeys = Object.keys(pages.zh).filter((key) => key !== 'heroImage').sort();
+  for (const locale of ['zh', 'en', 'fr']) {
+    const page = pages[locale];
+    assert.deepEqual(Object.keys(page).filter((key) => key !== 'heroImage').sort(), chineseKeys);
+    for (const [key, value] of Object.entries(page)) {
+      assert.match(config, new RegExp(`name: ${key}(?:,|\\s)`));
+      if (key !== 'heroImage') assert.ok(source.includes(`page.${key}`), `${key} must be rendered`);
+      if (Array.isArray(value)) assert.ok(value.length && value.every((item) => typeof item === 'string' && item.trim()));
+      else assert.equal(typeof value, 'string');
+      if (key !== 'heroImage') assert.ok(Array.isArray(value) || value.trim());
     }
+    assert.ok(page.contactNote.includes('luckyalicelin@gmail.com'));
+    assert.ok(!('contactBody' in page));
   }
-  assert.match(config, /name: aboutTags, label: 关于我标签, type: string, list: true/);
-  assert.match(source, /src=\{page\.heroImage \|\|/);
+  assert.equal(pages.zh.contactNote, 'Alisa妈妈邮箱：luckyalicelin@gmail.com');
+  assert.match(source, /src=\{pageZh\.heroImage \|\|/);
+  for (const locale of ['en', 'fr']) assert.match(config, new RegExp(`path: src/data/page\\.${locale}\\.json`));
+  assert.match(config, /input: public\/images\s+output: \/images/);
 });
 
-test('contact card is compact and shows only the parent email below its title', () => {
-  assert.equal(page.contactNote, 'Alisa妈妈邮箱：luckyalicelin@gmail.com');
-  assert.ok(!('contactEyebrow' in page));
-  assert.ok(!('contactBody' in page));
-  assert.doesNotMatch(config, /name: contactEyebrow|name: contactBody/);
-  assert.match(source, /max-w-xl rounded-\[2rem\] bg-\[#ef596f\]/);
-  assert.match(source, /\{page\.contactTitleSecond\}<\/h2>[\s\S]*\{page\.contactNote\}/);
-  assert.doesNotMatch(source, /page\.contactEyebrow|page\.contactBody/);
-});
-
-test('works and daily entries expose editable text and optional images', () => {
+test('works and daily have translations and shared optional images', () => {
   assert.ok(works.length >= 4);
   assert.ok(daily.length >= 3);
   for (const [entries, fields] of [
-    [works, ['title', 'category', 'note', 'image']],
-    [daily, ['title', 'copy', 'image']]
+    [works, ['title', 'titleEn', 'titleFr', 'category', 'categoryEn', 'categoryFr', 'note', 'noteEn', 'noteFr', 'image']],
+    [daily, ['title', 'titleEn', 'titleFr', 'copy', 'copyEn', 'copyFr', 'image']]
   ]) {
     for (const entry of entries) {
       assert.deepEqual(Object.keys(entry).sort(), [...fields].sort());
       for (const field of fields.filter((name) => name !== 'image')) assert.ok(entry[field].trim());
       assert.match(entry.image, /^(?:|\/images\/.+)$/);
     }
+    for (const field of fields) assert.match(config, new RegExp(`name: ${field}(?:,|\\s)`));
   }
-  assert.match(config, /path: src\/data\/works\.json\s+format: json\s+list: true/);
-  assert.match(config, /path: src\/data\/daily\.json\s+format: json\s+list: true/);
-  assert.match(config, /input: public\/images\s+output: \/images/);
   assert.match(source, /work\.image \|\| workPlaceholders/);
   assert.match(source, /project\.image \|\| dailyPlaceholders/);
 });

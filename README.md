@@ -17,4 +17,4 @@
 
 在 Pages CMS 中修改作品或日常时，请同时填写三种语言的文字；图片只需上传一次。直接访问 `/`、`/en/`、`/fr/` 即可预览对应语言。语言切换会返回目标语言首页。
 
-当前只完成本地页面与 Pages CMS 配置，**尚未连接 GitHub、启用 Pages CMS 账号或发布到 Cloudflare Pages**。下一阶段需要先把仓库推送到 GitHub，再授权 Pages CMS 编辑该仓库，并让 Cloudflare Pages 从同一仓库构建 `dist/`。Pages CMS 保存内容会产生 Git 提交；发布前应检查测试和构建结果。
+项目已推送到 [GitHub 仓库](https://github.com/MichaelyaoKKK/nextjs-blog) 的 `main` 分支；原 Next.js 模板保存在 `backup/nextjs-blog-759fdbf` 分支。**尚未验证 Pages CMS 编辑界面，也未发布到 Cloudflare Pages**。下一阶段需授权 Pages CMS 编辑此仓库，并让 Cloudflare Pages 从 `main` 构建 `dist/`。Pages CMS 保存内容会产生 Git 提交；发布前应检查测试和构建结果。

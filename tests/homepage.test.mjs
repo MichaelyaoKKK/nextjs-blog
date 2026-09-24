@@ -5,6 +5,7 @@ import { readFile, stat } from 'node:fs/promises';
 const read = async (path) => readFile(new URL(path, import.meta.url), 'utf8');
 const source = await read('../src/components/PortfolioPage.astro');
 const config = await read('../.pages.yml');
+const readme = await read('../README.md');
 const pages = Object.fromEntries(await Promise.all(
   ['zh', 'en', 'fr'].map(async (locale) => [
     locale,
@@ -24,6 +25,11 @@ test('three static routes share one homepage component', async () => {
   for (const id of ['about', 'works', 'daily', 'contact']) assert.match(source, new RegExp(`id="${id}"`));
   assert.match(source, /ScrollTrigger/);
   assert.doesNotMatch(source, /mailto:|<form\b/i);
+});
+
+test('repository guide points to the connected GitHub project', () => {
+  assert.match(readme, /https:\/\/github\.com\/MichaelyaoKKK\/nextjs-blog/);
+  assert.doesNotMatch(readme, /尚未连接 GitHub/);
 });
 
 test('language switcher uses accessible localized static routes', () => {

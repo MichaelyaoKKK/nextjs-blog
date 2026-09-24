@@ -4,8 +4,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro check && astro build",
+    "dev": "node server/start.mjs",
+    "start": "node server/start.mjs",
+    "dev:astro": "astro dev",
+    "build": "astro check && astro build && node scripts/copy-site-assets.mjs",
     "preview": "astro preview",
     "test": "node --test"
   },
@@ -15,6 +17,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.6.2",
     "typescript": "^5.7.3"
   }
 }

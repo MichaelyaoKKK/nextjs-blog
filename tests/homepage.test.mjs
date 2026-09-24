@@ -8,6 +8,8 @@ const client = await readFile(new URL('../site.js', import.meta.url), 'utf8');
 test('public page has the three editable module groups and the parent contact address', () => {
   for (const selector of ['mini-gallery', 'bento', 'daily-list']) assert.match(page, new RegExp(selector));
   assert.match(page, /luckyalicelin@gmail\.com/);
+  assert.match(page, /家长联系邮箱：/);
+  assert.doesNotMatch(page, /由家长管理联系邮箱。请勿在邮件中分享/);
   assert.match(page, /管理员入口/);
   assert.match(page, /site\.js/);
 });

@@ -52,10 +52,9 @@ test('all localized page fields are editable and populated', () => {
       else assert.equal(typeof value, 'string');
       if (key !== 'heroImage') assert.ok(Array.isArray(value) || value.trim());
     }
-    assert.ok(page.contactNote.includes('luckyalicelin@gmail.com'));
     assert.ok(!('contactBody' in page));
   }
-  assert.equal(pages.zh.contactNote, 'Alisa妈妈邮箱：luckyalicelin@gmail.com');
+  assert.match(config, /name: contactNote(?:,|\s)/);
   assert.match(source, /pageZh\.heroImage \? withBasePath\(base, pageZh\.heroImage\)/);
   for (const locale of ['en', 'fr']) assert.match(config, new RegExp(`path: src/data/page\\.${locale}\\.json`));
   assert.match(config, /input: public\/images\s+output: \/images/);

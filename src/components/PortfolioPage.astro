@@ -4,6 +4,7 @@ import pageEn from '../data/page.en.json';
 import pageFr from '../data/page.fr.json';
 import works from '../data/works.json';
 import daily from '../data/daily.json';
+import { withBasePath } from '../lib/site-urls.mjs';
 
 interface Props {
   locale: 'zh' | 'en' | 'fr';
@@ -12,10 +13,11 @@ interface Props {
 const { locale } = Astro.props;
 const page = { zh: pageZh, en: pageEn, fr: pageFr }[locale];
 const htmlLang = { zh: 'zh-CN', en: 'en', fr: 'fr' }[locale];
+const base = import.meta.env.BASE_URL;
 const languages = [
-  { code: 'zh', label: '中', href: '/' },
-  { code: 'en', label: 'EN', href: '/en/' },
-  { code: 'fr', label: 'FR', href: '/fr/' }
+  { code: 'zh', label: '中', href: withBasePath(base, '/') },
+  { code: 'en', label: 'EN', href: withBasePath(base, '/en/') },
+  { code: 'fr', label: 'FR', href: withBasePath(base, '/fr/') }
 ] as const;
 
 const workLayouts = ['md:col-span-2 md:row-span-2', 'md:col-span-2', 'md:col-span-2', 'md:col-span-4'];
@@ -61,9 +63,9 @@ const categories = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={page.metaDescription} />
     <title>{page.siteTitle}</title>
-    <link rel="alternate" hreflang="zh-CN" href="/" />
-    <link rel="alternate" hreflang="en" href="/en/" />
-    <link rel="alternate" hreflang="fr" href="/fr/" />
+    <link rel="alternate" hreflang="zh-CN" href={languages[0].href} />
+    <link rel="alternate" hreflang="en" href={languages[1].href} />
+    <link rel="alternate" hreflang="fr" href={languages[2].href} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
@@ -107,7 +109,7 @@ const categories = [
           </div>
           <div class="hero-art order-1 relative mx-auto aspect-square w-full max-w-md lg:order-2">
             <div class="absolute inset-0 rotate-6 rounded-[42%_58%_49%_51%/43%_42%_58%_57%] bg-[#ffcf69]"></div>
-            <img class="relative h-full w-full -rotate-3 rounded-[55%_45%_40%_60%/45%_55%_45%_55%] object-cover mix-blend-multiply contrast-110 saturate-125 dark:mix-blend-normal" src={pageZh.heroImage || 'https://picsum.photos/seed/alisa-portrait/1000/1000'} alt={page.heroImageAlt} />
+            <img class="relative h-full w-full -rotate-3 rounded-[55%_45%_40%_60%/45%_55%_45%_55%] object-cover mix-blend-multiply contrast-110 saturate-125 dark:mix-blend-normal" src={pageZh.heroImage ? withBasePath(base, pageZh.heroImage) : 'https://picsum.photos/seed/alisa-portrait/1000/1000'} alt={page.heroImageAlt} />
             <div class="absolute -bottom-5 -left-6 rounded-[2rem] bg-[#ef596f] px-5 py-4 font-display text-3xl text-white shadow-xl">{page.heroBadge}</div>
             <div class="absolute -right-4 top-10 h-16 w-16 rounded-full border-[10px] border-[#9fd8cb]"></div>
           </div>
@@ -135,7 +137,7 @@ const categories = [
           <div class="grid grid-flow-dense auto-rows-[13rem] gap-4 md:grid-cols-4">
             {displayedWorks.map((work, index) => (
               <article class:list={['work-card group relative overflow-hidden rounded-[2rem] bg-[#423d53]', workLayouts[index] || 'md:col-span-2']}>
-                <img src={work.image || workPlaceholders[index % workPlaceholders.length]} alt={work.title} class="h-full w-full object-cover opacity-85 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-100" loading="lazy" />
+                <img src={work.image ? withBasePath(base, work.image) : workPlaceholders[index % workPlaceholders.length]} alt={work.title} class="h-full w-full object-cover opacity-85 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-100" loading="lazy" />
                 <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#191622]/90 to-transparent p-6 pt-20">
                   <p class="text-xs font-bold tracking-[0.15em] text-[#ffcf69]">{work.category}</p><h3 class="font-display text-3xl">{work.title}</h3><p class="mt-1 text-sm text-[#f3edf5]">{work.note}</p>
                 </div>
@@ -151,7 +153,7 @@ const categories = [
           <div class="space-y-6">
             {displayedDaily.map((project, index) => (
               <article class="daily-card group grid overflow-hidden rounded-[2rem] bg-[#f4e7dc] md:grid-cols-[.85fr_1.15fr] dark:bg-[#302d40]">
-                <div class="overflow-hidden"><img src={project.image || dailyPlaceholders[index % dailyPlaceholders.length]} alt={project.title} class="h-full min-h-56 w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" /></div>
+                <div class="overflow-hidden"><img src={project.image ? withBasePath(base, project.image) : dailyPlaceholders[index % dailyPlaceholders.length]} alt={project.title} class="h-full min-h-56 w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" /></div>
                 <div class="flex flex-col justify-between p-7 sm:p-9"><div><h3 class="font-display text-4xl text-[#27223a] dark:text-[#fff6ec]">{project.title}</h3><p class="mt-4 leading-7 text-[#5c566a] dark:text-[#e6dfea]">{project.copy}</p></div><a href="#contact" class="mt-8 inline-block font-bold text-[#ef596f]">{page.dailyCardLink}</a></div>
               </article>
             ))}

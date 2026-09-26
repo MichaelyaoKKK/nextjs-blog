@@ -34,7 +34,7 @@ test('repository guide points to the connected GitHub project', () => {
 
 test('language switcher uses accessible localized static routes', () => {
   assert.match(source, /<html lang=\{htmlLang\}/);
-  for (const route of ['/', '/en/', '/fr/']) assert.ok(source.includes(`href: '${route}'`));
+  for (const route of ['/', '/en/', '/fr/']) assert.ok(source.includes(`href: withBasePath(base, '${route}')`));
   for (const locale of ['zh-CN', 'en', 'fr']) assert.ok(source.includes(`hreflang="${locale}"`));
   assert.match(source, /aria-current=\{locale === language\.code \? 'page'/);
   assert.match(source, /aria-label=\{page\.languageSwitcherLabel\}/);
@@ -56,7 +56,7 @@ test('all localized page fields are editable and populated', () => {
     assert.ok(!('contactBody' in page));
   }
   assert.equal(pages.zh.contactNote, 'Alisa妈妈邮箱：luckyalicelin@gmail.com');
-  assert.match(source, /src=\{pageZh\.heroImage \|\|/);
+  assert.match(source, /pageZh\.heroImage \? withBasePath\(base, pageZh\.heroImage\)/);
   for (const locale of ['en', 'fr']) assert.match(config, new RegExp(`path: src/data/page\\.${locale}\\.json`));
   assert.match(config, /input: public\/images\s+output: \/images/);
 });
@@ -75,6 +75,6 @@ test('works and daily have translations and shared optional images', () => {
     }
     for (const field of fields) assert.match(config, new RegExp(`name: ${field}(?:,|\\s)`));
   }
-  assert.match(source, /work\.image \|\| workPlaceholders/);
-  assert.match(source, /project\.image \|\| dailyPlaceholders/);
+  assert.match(source, /work\.image \? withBasePath\(base, work\.image\)/);
+  assert.match(source, /project\.image \? withBasePath\(base, project\.image\)/);
 });

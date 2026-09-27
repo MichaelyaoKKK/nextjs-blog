@@ -49,6 +49,16 @@ test('portfolio layout keeps the navigation in flow and uploaded art unfiltered'
   assert.match(source, /<section id="contact"[\s\S]*?<div class="mx-auto max-w-7xl rounded-\[2rem\] bg-\[\#ef596f\]/);
 });
 
+test('work covers show the complete artwork without captions covering the image', () => {
+  const worksMarkup = source.split('<section id="works"')[1].split('<section id="daily"')[0];
+  assert.match(worksMarkup, /grid gap-5 sm:grid-cols-2/);
+  assert.match(worksMarkup, /aspect-\[4\/5\]/);
+  assert.match(worksMarkup, /<img[^>]+object-contain/);
+  assert.doesNotMatch(worksMarkup, /object-cover|bg-gradient-to-t|group-hover:scale/);
+  assert.match(worksMarkup, /<\/div>\s*<div class="p-6 sm:p-7">/);
+  assert.doesNotMatch(source, /toArray<HTMLElement>\('\.work-card/);
+});
+
 test('all localized page fields are editable and populated', () => {
   const chineseKeys = Object.keys(pages.zh).filter((key) => key !== 'heroImage').sort();
   for (const locale of ['zh', 'en', 'fr']) {

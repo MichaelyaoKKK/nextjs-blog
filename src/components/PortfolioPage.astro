@@ -27,7 +27,6 @@ const languages = [
   { code: 'fr', label: 'FR', href: withBasePath(base, '/fr/') }
 ] as const;
 
-const workLayouts = ['md:col-span-2 md:row-span-2', 'md:col-span-2', 'md:col-span-2', 'md:col-span-4'];
 const placeholderImage = withBasePath(base, '/images/artwork-placeholder.svg');
 const aboutTagClasses = [
   'bg-[#ffe6eb] text-[#be3650]',
@@ -126,13 +125,15 @@ const categories = [
             <div><h2 class="font-display text-6xl leading-none sm:text-8xl">{page.worksTitle}</h2><div class="mt-6 flex gap-2 text-sm font-bold">{categories.map((category) => <span class="rounded-full border border-white/50 px-3 py-1">{category}</span>)}</div></div>
             <p class="max-w-sm text-lg leading-7 text-[#d5cede]">{page.worksIntro}</p>
           </div>
-          <div class="grid grid-flow-dense auto-rows-[13rem] gap-4 md:grid-cols-4">
+          <div class="grid gap-5 sm:grid-cols-2">
             {displayedWorks.map((work, index) => (
-              <article class:list={['work-card group relative overflow-hidden rounded-[2rem] bg-[#423d53]', workLayouts[index] || 'md:col-span-2']}>
+              <article class="work-card group overflow-hidden rounded-[2rem] bg-[#39334d]">
                 <a href={withBasePath(base, albumPath(locale, 'works', work.slug))} class="block h-full focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-[-4px] focus-visible:outline-[#ffcf69]">
-                  <img src={work.image ? withBasePath(base, work.image) : placeholderImage} alt="" class="h-full w-full object-cover opacity-85 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-100" style={work.image ? undefined : `filter: hue-rotate(${index * 48}deg)`} loading="lazy" />
-                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#191622]/90 to-transparent p-6 pt-20">
-                    <p class="text-xs font-bold tracking-[0.15em] text-[#ffcf69]">{work.category}</p><h3 class="font-display text-3xl">{work.title}</h3><p class="mt-1 text-sm text-[#f3edf5]">{work.note}</p>
+                  <div class="aspect-[4/5] bg-[#302b40] p-3 sm:p-4">
+                    <img src={work.image ? withBasePath(base, work.image) : placeholderImage} alt="" class="h-full w-full object-contain" style={work.image ? undefined : `filter: hue-rotate(${index * 48}deg)`} loading="lazy" />
+                  </div>
+                  <div class="p-6 sm:p-7">
+                    <p class="text-xs font-bold tracking-[0.15em] text-[#ffcf69]">{work.category}</p><h3 class="mt-2 font-display text-3xl">{work.title}</h3><p class="mt-2 text-sm leading-6 text-[#f3edf5]">{work.note}</p>
                   </div>
                 </a>
               </article>
@@ -170,7 +171,7 @@ const categories = [
       gsap.registerPlugin(ScrollTrigger);
       const toggle = document.querySelector<HTMLButtonElement>('#theme-toggle');
       toggle?.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); toggle.textContent = document.documentElement.classList.contains('dark') ? toggle.dataset.lightLabel || '' : toggle.dataset.darkLabel || ''; });
-      gsap.utils.toArray<HTMLElement>('.work-card, .daily-card').forEach((card) => gsap.fromTo(card, { scale: 0.88, opacity: 0.25 }, { scale: 1, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 88%', end: 'bottom 25%', scrub: 0.6 } }));
+      gsap.utils.toArray<HTMLElement>('.daily-card').forEach((card) => gsap.fromTo(card, { scale: 0.88, opacity: 0.25 }, { scale: 1, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 88%', end: 'bottom 25%', scrub: 0.6 } }));
       gsap.fromTo('.reveal-text', { opacity: 0.12 }, { opacity: 1, scrollTrigger: { trigger: '.reveal-text', start: 'top 85%', end: 'bottom 50%', scrub: 0.8 } });
     </script>
   </body>

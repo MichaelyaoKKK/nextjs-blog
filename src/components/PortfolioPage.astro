@@ -36,12 +36,12 @@ const displayedWorks = works.map((work) => ({
   title: locale === 'en' ? work.titleEn : locale === 'fr' ? work.titleFr : work.title,
   category: locale === 'en' ? work.categoryEn : locale === 'fr' ? work.categoryFr : work.category,
   note: locale === 'en' ? work.noteEn : locale === 'fr' ? work.noteFr : work.note,
-  image: work.image
+  image: 'image' in work ? work.image : ''
 }));
 const displayedDaily = daily.map((item) => ({
   title: locale === 'en' ? item.titleEn : locale === 'fr' ? item.titleFr : item.title,
   copy: locale === 'en' ? item.copyEn : locale === 'fr' ? item.copyFr : item.copy,
-  image: item.image
+  image: 'image' in item ? item.image : ''
 }));
 const availableCategories = [...new Set(displayedWorks.map((work) => work.category))];
 const categories = [

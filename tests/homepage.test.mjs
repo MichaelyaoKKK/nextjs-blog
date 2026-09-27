@@ -77,9 +77,11 @@ test('works and daily have translations and shared optional images', () => {
     [daily, ['title', 'titleEn', 'titleFr', 'copy', 'copyEn', 'copyFr', 'image']]
   ]) {
     for (const entry of entries) {
-      assert.deepEqual(Object.keys(entry).sort(), [...fields].sort());
-      for (const field of fields.filter((name) => name !== 'image')) assert.ok(entry[field].trim());
-      assert.match(entry.image, /^(?:|\/images\/.+)$/);
+      for (const field of fields.filter((name) => name !== 'image')) {
+        assert.equal(typeof entry[field], 'string');
+        assert.ok(entry[field].trim(), `${field} must be populated`);
+      }
+      if (entry.image !== undefined) assert.match(entry.image, /^(?:|\/images\/.+)$/);
     }
     for (const field of fields) assert.match(config, new RegExp(`name: ${field}(?:,|\\s)`));
   }

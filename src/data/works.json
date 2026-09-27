@@ -10,8 +10,11 @@
     "note": "给朋友家的橘猫画了一张会飞的肖像。",
     "noteEn": "A flying portrait of a friend's orange cat.",
     "noteFr": "Le portrait volant du chat roux d’un ami.",
-    "image": "/images/muii7l50-f2nyythi.jpg",
-    "gallery": ["/images/muii7l50-f2nyythi.jpg"]
+    "image": "/images/mujk7pd0-3e31aw1g.jpg",
+    "gallery": [
+      "/images/muii7l50-f2nyythi.jpg",
+      "/images/mujk7pd0-3e31aw1g.jpg"
+    ]
   },
   {
     "slug": "summer-soda",
@@ -25,7 +28,10 @@
     "noteEn": "A summer breeze, bottled up in a drawing.",
     "noteFr": "Une brise d’été mise en bouteille, sur le papier.",
     "image": "/images/muii8d1r-ar734efv.jpg",
-    "gallery": ["/images/muii8d1r-ar734efv.jpg"]
+    "gallery": [
+      "/images/muii8d1r-ar734efv.jpg",
+      "/images/mujk8wjx-pv36bee8.jpg"
+    ]
   },
   {
     "slug": "rabbit-post-office",
@@ -39,7 +45,10 @@
     "noteEn": "A letter addressed to the moon.",
     "noteFr": "Une lettre adressée à la lune.",
     "image": "/images/muii8tr2-2cuf1lkw.jpg",
-    "gallery": ["/images/muii8tr2-2cuf1lkw.jpg"]
+    "gallery": [
+      "/images/muii8tr2-2cuf1lkw.jpg",
+      "/images/mujk9c04-y085fvxt.jpg"
+    ]
   },
   {
     "slug": "garden-party",
@@ -53,6 +62,9 @@
     "noteEn": "Flowers, friends, and a shower of pink rain.",
     "noteFr": "Des fleurs, des amis et une pluie rose.",
     "image": "/images/muii94tt-hrtmzqq2.jpg",
-    "gallery": ["/images/muii94tt-hrtmzqq2.jpg"]
+    "gallery": [
+      "/images/muii94tt-hrtmzqq2.jpg",
+      "/images/mujk9ltl-r7nypny0.jpg"
+    ]
   }
 ]

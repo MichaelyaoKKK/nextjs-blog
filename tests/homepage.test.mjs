@@ -40,6 +40,11 @@ test('language switcher uses accessible localized static routes', () => {
   assert.match(source, /aria-label=\{page\.languageSwitcherLabel\}/);
 });
 
+test('only the Chinese hero headline uses the smaller type scale', () => {
+  assert.match(source, /locale === 'zh' \? 'text-\[clamp\(3\.1rem,6vw,5\.5rem\)\]' : 'text-\[clamp\(3\.6rem,8vw,8\.2rem\)\]'/);
+  assert.match(source, /\{page\.heroTitleFirst\}<br \/>\{page\.heroTitleSecond\}/);
+});
+
 test('portfolio layout keeps the navigation in flow and uploaded art unfiltered', () => {
   assert.match(source, /<nav class="mx-auto mt-5 flex /);
   assert.doesNotMatch(source, /<nav class="[^"]*\b(?:fixed|sticky)\b/);

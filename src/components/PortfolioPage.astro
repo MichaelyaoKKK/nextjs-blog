@@ -92,7 +92,7 @@ const categories = [
         <div class="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-8">
           <div class="order-2 lg:order-1">
             <p class="mb-5 font-bold tracking-[0.18em] text-[#ef596f]">{page.heroEyebrow}</p>
-            <h1 class="max-w-6xl font-display text-[clamp(3.6rem,8vw,8.2rem)] leading-[0.84] tracking-[-0.055em] text-[#27223a] dark:text-[#fff6ec]">{page.heroTitleFirst}<br />{page.heroTitleSecond}</h1>
+            <h1 class:list={['max-w-6xl font-display leading-[0.84] tracking-[-0.055em] text-[#27223a] dark:text-[#fff6ec]', locale === 'zh' ? 'text-[clamp(3.1rem,6vw,5.5rem)]' : 'text-[clamp(3.6rem,8vw,8.2rem)]']}>{page.heroTitleFirst}<br />{page.heroTitleSecond}</h1>
             <p class="mt-8 max-w-xl text-lg leading-8 text-[#5c566a] dark:text-[#e6dfea]">{page.heroIntro}</p>
             <div class="mt-9 flex flex-wrap gap-3">
               <a href="#works" class="rounded-full bg-[#27223a] px-7 py-4 font-bold text-white transition duration-300 hover:-translate-y-1 hover:bg-[#ef596f] dark:bg-[#ffcf69] dark:text-[#27223a]">{page.heroWorksButton}</a>

@@ -40,6 +40,15 @@ test('language switcher uses accessible localized static routes', () => {
   assert.match(source, /aria-label=\{page\.languageSwitcherLabel\}/);
 });
 
+test('portfolio layout keeps the navigation in flow and uploaded art unfiltered', () => {
+  assert.match(source, /<nav class="mx-auto mt-5 flex /);
+  assert.doesNotMatch(source, /<nav class="[^"]*\b(?:fixed|sticky)\b/);
+  assert.match(source, /<section id="top" class="[^"]*\bpt-12\b/);
+  assert.match(source, /<img class="[^"]*object-cover" src=\{pageZh\.heroImage/);
+  assert.doesNotMatch(source, /mix-blend-multiply|contrast-110|saturate-125/);
+  assert.match(source, /<section id="contact"[\s\S]*?<div class="mx-auto max-w-7xl rounded-\[2rem\] bg-\[\#ef596f\]/);
+});
+
 test('all localized page fields are editable and populated', () => {
   const chineseKeys = Object.keys(pages.zh).filter((key) => key !== 'heroImage').sort();
   for (const locale of ['zh', 'en', 'fr']) {

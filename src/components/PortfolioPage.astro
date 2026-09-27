@@ -5,6 +5,7 @@ import pageFr from '../data/page.fr.json';
 import works from '../data/works.json';
 import daily from '../data/daily.json';
 import { withBasePath } from '../lib/site-urls.mjs';
+import { albumPath, coverImage, validateAlbumEntries } from '../lib/gallery.mjs';
 import '@fontsource/cabin-sketch/400.css';
 import '@fontsource/cabin-sketch/700.css';
 import '@fontsource-variable/noto-sans-sc';
@@ -15,6 +16,8 @@ interface Props {
 }
 
 const { locale } = Astro.props;
+validateAlbumEntries(works, 'works');
+validateAlbumEntries(daily, 'daily');
 const page = { zh: pageZh, en: pageEn, fr: pageFr }[locale];
 const htmlLang = { zh: 'zh-CN', en: 'en', fr: 'fr' }[locale];
 const base = import.meta.env.BASE_URL;
@@ -33,15 +36,17 @@ const aboutTagClasses = [
   'bg-[#e9e4ff] text-[#56458d]'
 ];
 const displayedWorks = works.map((work) => ({
+  slug: work.slug,
   title: locale === 'en' ? work.titleEn : locale === 'fr' ? work.titleFr : work.title,
   category: locale === 'en' ? work.categoryEn : locale === 'fr' ? work.categoryFr : work.category,
   note: locale === 'en' ? work.noteEn : locale === 'fr' ? work.noteFr : work.note,
-  image: 'image' in work ? work.image : ''
+  image: coverImage(work)
 }));
 const displayedDaily = daily.map((item) => ({
+  slug: item.slug,
   title: locale === 'en' ? item.titleEn : locale === 'fr' ? item.titleFr : item.title,
   copy: locale === 'en' ? item.copyEn : locale === 'fr' ? item.copyFr : item.copy,
-  image: 'image' in item ? item.image : ''
+  image: coverImage(item)
 }));
 const availableCategories = [...new Set(displayedWorks.map((work) => work.category))];
 const categories = [
@@ -124,10 +129,12 @@ const categories = [
           <div class="grid grid-flow-dense auto-rows-[13rem] gap-4 md:grid-cols-4">
             {displayedWorks.map((work, index) => (
               <article class:list={['work-card group relative overflow-hidden rounded-[2rem] bg-[#423d53]', workLayouts[index] || 'md:col-span-2']}>
-                <img src={work.image ? withBasePath(base, work.image) : placeholderImage} alt={work.title} class="h-full w-full object-cover opacity-85 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-100" style={work.image ? undefined : `filter: hue-rotate(${index * 48}deg)`} loading="lazy" />
-                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#191622]/90 to-transparent p-6 pt-20">
-                  <p class="text-xs font-bold tracking-[0.15em] text-[#ffcf69]">{work.category}</p><h3 class="font-display text-3xl">{work.title}</h3><p class="mt-1 text-sm text-[#f3edf5]">{work.note}</p>
-                </div>
+                <a href={withBasePath(base, albumPath(locale, 'works', work.slug))} class="block h-full focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-[-4px] focus-visible:outline-[#ffcf69]">
+                  <img src={work.image ? withBasePath(base, work.image) : placeholderImage} alt="" class="h-full w-full object-cover opacity-85 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-100" style={work.image ? undefined : `filter: hue-rotate(${index * 48}deg)`} loading="lazy" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#191622]/90 to-transparent p-6 pt-20">
+                    <p class="text-xs font-bold tracking-[0.15em] text-[#ffcf69]">{work.category}</p><h3 class="font-display text-3xl">{work.title}</h3><p class="mt-1 text-sm text-[#f3edf5]">{work.note}</p>
+                  </div>
+                </a>
               </article>
             ))}
           </div>
@@ -139,9 +146,9 @@ const categories = [
           <div class="gallery-title lg:sticky lg:top-36 lg:h-fit"><h2 class="font-display text-6xl leading-none text-[#ef596f] sm:text-8xl">{page.dailyTitleFirst}<br />{page.dailyTitleSecond}</h2><p class="mt-7 max-w-sm text-lg leading-8 text-[#5c566a] dark:text-[#e6dfea]">{page.dailyIntro}</p></div>
           <div class="space-y-6">
             {displayedDaily.map((project, index) => (
-              <article class="daily-card group grid overflow-hidden rounded-[2rem] bg-[#f4e7dc] md:grid-cols-[.85fr_1.15fr] dark:bg-[#302d40]">
+              <article class="daily-card group relative grid overflow-hidden rounded-[2rem] bg-[#f4e7dc] md:grid-cols-[.85fr_1.15fr] dark:bg-[#302d40]">
                 <div class="overflow-hidden"><img src={project.image ? withBasePath(base, project.image) : placeholderImage} alt={project.title} class="h-full min-h-56 w-full object-cover transition duration-700 group-hover:scale-105" style={project.image ? undefined : `filter: hue-rotate(${index * 48 + 24}deg)`} loading="lazy" /></div>
-                <div class="flex flex-col justify-between p-7 sm:p-9"><div><h3 class="font-display text-4xl text-[#27223a] dark:text-[#fff6ec]">{project.title}</h3><p class="mt-4 leading-7 text-[#5c566a] dark:text-[#e6dfea]">{project.copy}</p></div><a href="#contact" class="mt-8 inline-block font-bold text-[#ef596f]">{page.dailyCardLink}</a></div>
+                <div class="flex flex-col justify-between p-7 sm:p-9"><div><h3 class="font-display text-4xl text-[#27223a] dark:text-[#fff6ec]">{project.title}</h3><p class="mt-4 leading-7 text-[#5c566a] dark:text-[#e6dfea]">{project.copy}</p></div><a href={withBasePath(base, albumPath(locale, 'daily', project.slug))} class="after:absolute after:inset-0 mt-8 inline-block font-bold text-[#ef596f] hover:underline focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ef596f]">{page.dailyCardLink}</a></div>
               </article>
             ))}
           </div>

@@ -9,12 +9,14 @@
 ## 内容管理准备
 
 - `src/data/page.json`、`page.en.json`、`page.fr.json`：分别管理中文、英文、法文的页面文字。中文文件中的首屏图片由三种语言共用。
-- `src/data/works.json`：每件作品的三语名称、分类、介绍和共用图片；可添加或调整卡片顺序。
-- `src/data/daily.json`：每张日常卡片的三语文字和共用图片。
+- `src/data/works.json`：每件作品的三语名称、分类、介绍、封面和相册图片；可添加或调整卡片顺序。
+- `src/data/daily.json`：每张日常卡片的三语文字、封面和相册图片。
 - `.pages.yml`：Pages CMS 的编辑字段与图片上传位置。上传图片将存入 `public/images/`，页面使用 `/images/` 路径。
 
 图片字段为空时，页面显示站内的中性占位图；上传并保存图片后显示上传的图片。样式、字体和占位图随网站一起发布，不依赖访客访问第三方 CDN 或随机图片服务。请勿上传包含孩子学校、住址、固定行程或定位信息的图片。
 
-在 Pages CMS 中修改作品或日常时，请同时填写三种语言的文字；图片只需上传一次。直接访问 `/`、`/en/`、`/fr/` 即可预览对应语言。语言切换会返回目标语言首页。
+每张作品或日常卡片都有独立相册页。家长在 Pages CMS 的「相册图片」中可上传或选择多张图片（每个相册最多 30 张），再在「封面图片」中自由选择其中一张；两处引用同一图片文件，不会复制文件。封面可以留空，此时自动使用相册第一张。若设置了封面，必须同时将该图片加入相册，否则测试和构建会报错。没有图片的相册显示空状态。`slug` 是相册网址标识，只能使用小写英文字母、数字和连字符，发布后不要随意修改，以免旧链接失效。
+
+在 Pages CMS 中修改作品或日常时，请同时填写三种语言的文字；图片只需上传一次。直接访问 `/`、`/en/`、`/fr/` 即可预览对应语言；例如 `/works/cloud-puppy/`、`/en/works/cloud-puppy/` 和 `/fr/works/cloud-puppy/` 是同一相册的三种语言。相册内切换语言会保留当前相册。
 
 项目已推送到 [GitHub 仓库](https://github.com/MichaelyaoKKK/nextjs-blog) 的 `main` 分支；原 Next.js 模板保存在 `backup/nextjs-blog-759fdbf` 分支。[GitHub Pages](https://michaelyaokkk.github.io/nextjs-blog/) 会通过 `.github/workflows/deploy.yml` 自动测试、构建并发布三种语言的页面。Pages CMS 保存内容会产生 Git 提交并触发同一部署流程；家长仍应在发布后检查图片、文字及隐私信息。

@@ -1,0 +1,145 @@
+---
+import pageZh from '../data/page.json';
+import pageEn from '../data/page.en.json';
+import pageFr from '../data/page.fr.json';
+import works from '../data/works.json';
+import daily from '../data/daily.json';
+import { albumPath, galleryImages, validateAlbumEntries } from '../lib/gallery.mjs';
+import { withBasePath } from '../lib/site-urls.mjs';
+import '@fontsource/cabin-sketch/400.css';
+import '@fontsource/cabin-sketch/700.css';
+import '@fontsource-variable/noto-sans-sc';
+import '../styles/global.css';
+
+interface Props {
+  locale: 'zh' | 'en' | 'fr';
+  collection: 'works' | 'daily';
+  slug: string;
+}
+
+const { locale, collection, slug } = Astro.props;
+validateAlbumEntries(works, 'works');
+validateAlbumEntries(daily, 'daily');
+const entry = (collection === 'works' ? works : daily).find((item) => item.slug === slug);
+if (!entry) throw new Error(`Album not found: ${collection}/${slug}`);
+
+const page = { zh: pageZh, en: pageEn, fr: pageFr }[locale];
+const labels = {
+  zh: { back: '返回主页', gallery: '图片相册', empty: '这个相册还没有图片，稍后再来看看。', previous: '上一张', next: '下一张', view: '查看第', photo: '张图片', keyboard: '聚焦相册后，可用左右方向键切换图片。' },
+  en: { back: 'Back to home', gallery: 'Photo album', empty: 'This album has no images yet. Please check back later.', previous: 'Previous', next: 'Next', view: 'View image ', photo: '', keyboard: 'Focus the gallery and use the left or right arrow key to change images.' },
+  fr: { back: 'Retour à l’accueil', gallery: 'Album photos', empty: 'Cet album ne contient pas encore d’images. Revenez bientôt.', previous: 'Précédente', next: 'Suivante', view: 'Voir l’image ', photo: '', keyboard: 'Placez le focus sur l’album et utilisez les flèches gauche ou droite pour changer d’image.' }
+}[locale];
+const htmlLang = { zh: 'zh-CN', en: 'en', fr: 'fr' }[locale];
+const title = locale === 'en' ? entry.titleEn : locale === 'fr' ? entry.titleFr : entry.title;
+const description = collection === 'works'
+  ? (locale === 'en' ? 'noteEn' in entry && entry.noteEn : locale === 'fr' ? 'noteFr' in entry && entry.noteFr : 'note' in entry && entry.note)
+  : (locale === 'en' ? 'copyEn' in entry && entry.copyEn : locale === 'fr' ? 'copyFr' in entry && entry.copyFr : 'copy' in entry && entry.copy);
+const images = galleryImages(entry);
+const base = import.meta.env.BASE_URL;
+const homePath = locale === 'zh' ? '/' : `/${locale}/`;
+const section = collection === 'works' ? 'works' : 'daily';
+const languages = [
+  { code: 'zh', label: '中', href: withBasePath(base, albumPath('zh', collection, slug)) },
+  { code: 'en', label: 'EN', href: withBasePath(base, albumPath('en', collection, slug)) },
+  { code: 'fr', label: 'FR', href: withBasePath(base, albumPath('fr', collection, slug)) }
+] as const;
+---
+
+<!doctype html>
+<html lang={htmlLang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description || page.metaDescription} />
+    <title>{title} | {page.siteTitle}</title>
+    {languages.map((language) => <link rel="alternate" hreflang={language.code === 'zh' ? 'zh-CN' : language.code} href={language.href} />)}
+  </head>
+  <body class="bg-[#fffaf2] font-body text-[#27223a] antialiased dark:bg-[#1d1c2b] dark:text-[#fff6ec]">
+    <main class="min-h-[100dvh] px-5 pb-20 sm:px-8 lg:px-12">
+      <nav class="mx-auto mt-5 flex w-full max-w-5xl items-center justify-between rounded-full border border-white/70 bg-[#fffaf2]/85 px-4 py-3 shadow-[0_12px_40px_rgba(61,37,71,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-[#29263b]/85 sm:px-6">
+        <a href={withBasePath(base, homePath)} class="flex items-center gap-2 font-display text-2xl text-[#ef596f]" aria-label={page.brandName}>
+          <span class="grid h-9 w-9 place-items-center rounded-full bg-[#ffcf69] text-lg text-[#27223a]">A</span>{page.brandName}
+        </a>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <div class="flex items-center rounded-full border border-[#27223a]/15 p-1 dark:border-white/25" role="group" aria-label={page.languageSwitcherLabel}>
+            {languages.map((language) => <a href={language.href} lang={language.code === 'zh' ? 'zh-CN' : language.code} aria-current={locale === language.code ? 'page' : undefined} class:list={['rounded-full px-2 py-1 text-xs font-bold sm:px-2.5', locale === language.code ? 'bg-[#ef596f] text-white' : 'text-[#27223a] hover:bg-[#ffe6eb] dark:text-white dark:hover:bg-white/15']}>{language.label}</a>)}
+          </div>
+          <button id="gallery-theme-toggle" class="grid h-10 w-10 place-items-center rounded-full bg-[#27223a] text-sm font-bold text-white dark:bg-[#ffcf69] dark:text-[#27223a]" aria-label={page.themeToggleLabel} data-dark-label={page.themeDarkLabel} data-light-label={page.themeLightLabel}>{page.themeDarkLabel}</button>
+        </div>
+      </nav>
+
+      <div class="mx-auto max-w-7xl pt-12 sm:pt-16">
+        <a href={`${withBasePath(base, homePath)}#${section}`} class="inline-flex rounded-full border border-[#27223a]/20 px-5 py-2 font-bold text-[#27223a] hover:border-[#ef596f] hover:text-[#ef596f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ef596f] dark:border-white/30 dark:text-white">{labels.back}</a>
+        <header class="max-w-3xl pb-8 pt-8 sm:pb-12">
+          <p class="font-bold text-[#ef596f]">{labels.gallery}</p>
+          <h1 class="mt-3 font-display text-5xl leading-tight sm:text-7xl">{title}</h1>
+          {description && <p class="mt-4 text-lg leading-8 text-[#5c566a] dark:text-[#e6dfea]">{description}</p>}
+        </header>
+
+        {images.length ? (
+          <section data-gallery tabindex={images.length > 1 ? 0 : undefined} aria-label={`${title} ${labels.gallery}`} class="rounded-[2rem] bg-[#f4e7dc] p-3 outline-none focus-visible:ring-4 focus-visible:ring-[#ef596f] dark:bg-[#302d40] sm:p-6">
+            <div class="grid min-h-[18rem] place-items-center rounded-[1.4rem] bg-[#ebe4df] dark:bg-[#242234] sm:min-h-[30rem]">
+              <img data-gallery-main src={withBasePath(base, images[0])} alt={`${title} 1`} class="max-h-[75dvh] w-full object-contain" />
+            </div>
+            {images.length > 1 && (
+              <>
+                <div class="mt-5 flex items-center justify-between gap-3">
+                  <button type="button" data-gallery-previous disabled class="rounded-full border border-[#27223a]/30 px-5 py-2 font-bold disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/30">{labels.previous}</button>
+                  <span data-gallery-count aria-live="polite" class="font-bold">1 / {images.length}</span>
+                  <button type="button" data-gallery-next class="rounded-full border border-[#27223a]/30 px-5 py-2 font-bold disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/30">{labels.next}</button>
+                </div>
+                <p class="mt-3 text-center text-sm text-[#5c566a] dark:text-[#e6dfea]">{labels.keyboard}</p>
+                <div class="mt-6 flex gap-3 overflow-x-auto pb-2" role="group" aria-label={labels.gallery}>
+                  {images.map((image, index) => (
+                    <button type="button" data-gallery-thumb data-src={withBasePath(base, image)} data-alt={`${title} ${index + 1}`} aria-label={`${labels.view}${index + 1}${labels.photo}`} aria-pressed={index === 0 ? 'true' : 'false'} class="shrink-0 rounded-2xl border-[3px] border-transparent p-1 aria-pressed:border-[#ef596f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#ef596f]">
+                      <img src={withBasePath(base, image)} alt="" loading="lazy" class="h-20 w-20 rounded-xl object-cover sm:h-28 sm:w-28" />
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </section>
+        ) : (
+          <div class="rounded-[2rem] bg-[#f4e7dc] px-7 py-16 text-lg dark:bg-[#302d40]">{labels.empty}</div>
+        )}
+      </div>
+    </main>
+
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>('#gallery-theme-toggle');
+      toggle?.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        toggle.textContent = document.documentElement.classList.contains('dark') ? toggle.dataset.lightLabel || '' : toggle.dataset.darkLabel || '';
+      });
+
+      const gallery = document.querySelector<HTMLElement>('[data-gallery]');
+      if (gallery) {
+        const image = gallery.querySelector<HTMLImageElement>('[data-gallery-main]');
+        const counter = gallery.querySelector<HTMLElement>('[data-gallery-count]');
+        const previous = gallery.querySelector<HTMLButtonElement>('[data-gallery-previous]');
+        const next = gallery.querySelector<HTMLButtonElement>('[data-gallery-next]');
+        const thumbs = [...gallery.querySelectorAll<HTMLButtonElement>('[data-gallery-thumb]')];
+        let active = 0;
+
+        const show = (index: number) => {
+          if (!image || index < 0 || index >= thumbs.length) return;
+          active = index;
+          image.src = thumbs[index].dataset.src || '';
+          image.alt = thumbs[index].dataset.alt || '';
+          if (counter) counter.textContent = `${index + 1} / ${thumbs.length}`;
+          if (previous) previous.disabled = index === 0;
+          if (next) next.disabled = index === thumbs.length - 1;
+          thumbs.forEach((thumb, thumbIndex) => thumb.setAttribute('aria-pressed', String(thumbIndex === index)));
+        };
+
+        thumbs.forEach((thumb, index) => thumb.addEventListener('click', () => show(index)));
+        previous?.addEventListener('click', () => show(active - 1));
+        next?.addEventListener('click', () => show(active + 1));
+        gallery.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft' && active > 0) { event.preventDefault(); show(active - 1); }
+          if (event.key === 'ArrowRight' && active < thumbs.length - 1) { event.preventDefault(); show(active + 1); }
+        });
+      }
+    </script>
+  </body>
+</html>

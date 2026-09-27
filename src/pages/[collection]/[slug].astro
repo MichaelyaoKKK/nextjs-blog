@@ -1,0 +1,16 @@
+---
+import GalleryPage from '../../components/GalleryPage.astro';
+import works from '../../data/works.json';
+import daily from '../../data/daily.json';
+
+export function getStaticPaths() {
+  return [
+    ...works.map((item) => ({ params: { collection: 'works', slug: item.slug } })),
+    ...daily.map((item) => ({ params: { collection: 'daily', slug: item.slug } }))
+  ];
+}
+
+const { collection, slug } = Astro.params;
+---
+
+<GalleryPage locale="zh" collection={collection as 'works' | 'daily'} slug={slug!} />

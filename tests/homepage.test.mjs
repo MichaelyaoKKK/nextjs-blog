@@ -69,22 +69,26 @@ test('all localized page fields are editable and populated', () => {
   assert.match(config, /input: public\/images\s+output: \/images/);
 });
 
-test('works and daily have translations and shared optional images', () => {
+test('works and daily have translations and editable albums', () => {
   assert.ok(works.length >= 4);
   assert.ok(daily.length >= 3);
   for (const [entries, fields] of [
-    [works, ['title', 'titleEn', 'titleFr', 'category', 'categoryEn', 'categoryFr', 'note', 'noteEn', 'noteFr', 'image']],
-    [daily, ['title', 'titleEn', 'titleFr', 'copy', 'copyEn', 'copyFr', 'image']]
+    [works, ['slug', 'title', 'titleEn', 'titleFr', 'category', 'categoryEn', 'categoryFr', 'note', 'noteEn', 'noteFr', 'image', 'gallery']],
+    [daily, ['slug', 'title', 'titleEn', 'titleFr', 'copy', 'copyEn', 'copyFr', 'image', 'gallery']]
   ]) {
     for (const entry of entries) {
-      for (const field of fields.filter((name) => name !== 'image')) {
+      for (const field of fields.filter((name) => !['image', 'gallery'].includes(name))) {
         assert.equal(typeof entry[field], 'string');
         assert.ok(entry[field].trim(), `${field} must be populated`);
       }
       if (entry.image !== undefined) assert.match(entry.image, /^(?:|\/images\/.+)$/);
+      assert.ok(entry.gallery === undefined || Array.isArray(entry.gallery));
+      if (entry.image) assert.ok(entry.gallery?.includes(entry.image), 'cover must be in gallery');
     }
     for (const field of fields) assert.match(config, new RegExp(`name: ${field}(?:,|\\s)`));
   }
   assert.match(source, /work\.image \? withBasePath\(base, work\.image\)/);
   assert.match(source, /project\.image \? withBasePath\(base, project\.image\)/);
+  assert.match(source, /albumPath\(locale, 'works', work\.slug\)/);
+  assert.match(source, /albumPath\(locale, 'daily', project\.slug\)/);
 });

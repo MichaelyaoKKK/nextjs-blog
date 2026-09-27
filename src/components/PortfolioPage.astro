@@ -41,6 +41,7 @@ const displayedWorks = works.map((work) => ({
   note: locale === 'en' ? work.noteEn : locale === 'fr' ? work.noteFr : work.note,
   image: coverImage(work)
 }));
+const secondWorkColumnStart = Math.ceil(displayedWorks.length / 2);
 const displayedDaily = daily.map((item) => ({
   slug: item.slug,
   title: locale === 'en' ? item.titleEn : locale === 'fr' ? item.titleFr : item.title,
@@ -125,12 +126,12 @@ const categories = [
             <div><h2 class="font-display text-6xl leading-none sm:text-8xl">{page.worksTitle}</h2><div class="mt-6 flex gap-2 text-sm font-bold">{categories.map((category) => <span class="rounded-full border border-white/50 px-3 py-1">{category}</span>)}</div></div>
             <p class="max-w-sm text-lg leading-7 text-[#d5cede]">{page.worksIntro}</p>
           </div>
-          <div class="grid gap-5 sm:grid-cols-2">
+          <div class="sm:columns-2 sm:gap-7">
             {displayedWorks.map((work, index) => (
-              <article class="work-card group overflow-hidden rounded-[2rem] bg-[#39334d]">
+              <article class:list={['work-card group mb-6 break-inside-avoid overflow-hidden rounded-[2rem] bg-[#39334d] sm:mb-7', index === secondWorkColumnStart ? 'sm:mt-14 sm:break-before-column' : '']}>
                 <a href={withBasePath(base, albumPath(locale, 'works', work.slug))} class="block h-full focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-[-4px] focus-visible:outline-[#ffcf69]">
-                  <div class="aspect-[4/5] bg-[#302b40] p-3 sm:p-4">
-                    <img src={work.image ? withBasePath(base, work.image) : placeholderImage} alt="" class="h-full w-full object-contain" style={work.image ? undefined : `filter: hue-rotate(${index * 48}deg)`} loading="lazy" />
+                  <div class="bg-[#302b40] p-3 sm:p-4">
+                    <img src={work.image ? withBasePath(base, work.image) : placeholderImage} alt="" class="block h-auto w-full object-contain" style={work.image ? undefined : `filter: hue-rotate(${index * 48}deg)`} loading="lazy" />
                   </div>
                   <div class="p-6 sm:p-7">
                     <p class="text-xs font-bold tracking-[0.15em] text-[#ffcf69]">{work.category}</p><h3 class="mt-2 font-display text-3xl">{work.title}</h3><p class="mt-2 text-sm leading-6 text-[#f3edf5]">{work.note}</p>

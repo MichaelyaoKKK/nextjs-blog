@@ -49,11 +49,14 @@ test('portfolio layout keeps the navigation in flow and uploaded art unfiltered'
   assert.match(source, /<section id="contact"[\s\S]*?<div class="mx-auto max-w-7xl rounded-\[2rem\] bg-\[\#ef596f\]/);
 });
 
-test('work covers show the complete artwork without captions covering the image', () => {
+test('work covers form a staggered gallery with complete artwork and separate captions', () => {
   const worksMarkup = source.split('<section id="works"')[1].split('<section id="daily"')[0];
-  assert.match(worksMarkup, /grid gap-5 sm:grid-cols-2/);
-  assert.match(worksMarkup, /aspect-\[4\/5\]/);
-  assert.match(worksMarkup, /<img[^>]+object-contain/);
+  assert.match(source, /const secondWorkColumnStart = Math\.ceil\(displayedWorks\.length \/ 2\)/);
+  assert.match(worksMarkup, /sm:columns-2 sm:gap-7/);
+  assert.match(worksMarkup, /mb-6 break-inside-avoid/);
+  assert.match(worksMarkup, /index === secondWorkColumnStart \? 'sm:mt-14 sm:break-before-column'/);
+  assert.match(worksMarkup, /<img[^>]+block h-auto w-full object-contain/);
+  assert.doesNotMatch(worksMarkup, /aspect-\[/);
   assert.doesNotMatch(worksMarkup, /object-cover|bg-gradient-to-t|group-hover:scale/);
   assert.match(worksMarkup, /<\/div>\s*<div class="p-6 sm:p-7">/);
   assert.doesNotMatch(source, /toArray<HTMLElement>\('\.work-card/);

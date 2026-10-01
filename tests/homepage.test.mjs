@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, stat } from 'node:fs/promises';
+import { coverImage } from '../src/lib/gallery.mjs';
 
 const read = async (path) => readFile(new URL(path, import.meta.url), 'utf8');
 const source = await read('../src/components/PortfolioPage.astro');
@@ -101,7 +102,7 @@ test('works and daily have translations and editable albums', () => {
       }
       if (entry.image !== undefined) assert.match(entry.image, /^(?:|\/images\/.+)$/);
       assert.ok(entry.gallery === undefined || Array.isArray(entry.gallery));
-      if (entry.image) assert.ok(entry.gallery?.some((photo) => photo.image === entry.image), 'cover must be in gallery');
+      if (entry.gallery?.length) assert.ok(entry.gallery.some((photo) => photo.image === coverImage(entry)), 'displayed cover must be in gallery');
     }
     for (const field of fields) assert.match(config, new RegExp(`name: ${field}(?:,|\\s)`));
   }

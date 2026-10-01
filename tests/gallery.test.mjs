@@ -24,7 +24,10 @@ test('albums use stable URLs, one shared image list, and a selectable cover', ()
   assert.equal(coverPhoto(album)?.title, 'Second drawing');
   assert.equal(coverImage({ gallery: album.gallery }), '/images/first.jpg');
   assert.equal(coverPhoto({ gallery: album.gallery })?.title, 'First drawing');
+  assert.equal(coverImage({ image: '/images/removed.jpg', gallery: album.gallery }), '/images/first.jpg');
+  assert.equal(coverPhoto({ image: '/images/removed.jpg', gallery: album.gallery })?.title, 'First drawing');
   assert.equal(coverImage({ gallery: [] }), '');
+  assert.equal(coverImage({ image: '/images/removed.jpg', gallery: [] }), '');
   validateAlbumEntries([{ slug: 'empty-album' }], 'daily');
 });
 
@@ -32,9 +35,12 @@ test('invalid or duplicate gallery data blocks publishing', () => {
   const photo = { image: '/images/cover.jpg', title: 'A drawing' };
   const album = { slug: 'sample', image: photo.image, gallery: [photo] };
   assert.throws(() => validateAlbumEntries([album, album], 'works'), /unique lowercase slug/);
-  assert.throws(() => validateAlbumEntries([{ ...album, image: '/images/other.jpg' }], 'works'), /cover image must also be in the gallery/);
+  validateAlbumEntries([{ ...album, image: '/images/other.jpg' }], 'works');
+  validateAlbumEntries([{ slug: 'named-photo', gallery: [{ image: '/images/2026/War & Peace.jpeg', title: 'War and Peace' }] }], 'works');
   assert.throws(() => validateAlbumEntries([{ ...album, gallery: [photo, photo] }], 'works'), /duplicate images/);
   assert.throws(() => validateAlbumEntries([{ ...album, gallery: [{ ...photo, image: '/elsewhere/cover.jpg' }] }], 'works'), /local image paths/);
+  assert.throws(() => validateAlbumEntries([{ ...album, gallery: [{ ...photo, image: '/images/../secret.jpg' }] }], 'works'), /local image paths/);
+  assert.throws(() => validateAlbumEntries([{ ...album, gallery: [{ ...photo, image: '/images/photo.jpg?raw=1' }] }], 'works'), /local image paths/);
   assert.throws(() => validateAlbumEntries([{ ...album, gallery: [{ ...photo, title: 'cover.jpg' }] }], 'works'), /name without a file extension/);
   assert.throws(() => validateAlbumEntries([{ ...album, gallery: [{ ...photo, title: ' ' }] }], 'works'), /name without a file extension/);
   assert.throws(() => validateAlbumEntries([{ ...album, gallery: ['/images/cover.jpg'] }], 'works'), /local image paths/);

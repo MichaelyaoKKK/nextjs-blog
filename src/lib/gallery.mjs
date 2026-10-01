@@ -1,4 +1,4 @@
-const imagePathPattern = /^\/images\/[a-zA-Z0-9][a-zA-Z0-9._/-]*\.(?:jpe?g|png|webp)$/i;
+const imagePathPattern = /^\/images\/[^\\?#\x00-\x1F]+\.(?:jpe?g|png|webp)$/i;
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 /** @returns {{ image: string, title: string }[]} */
@@ -12,7 +12,8 @@ export function galleryImages(entry) {
 }
 
 export function coverImage(entry) {
-  return entry.image || galleryImages(entry)[0] || '';
+  const images = galleryImages(entry);
+  return images.includes(entry.image) ? entry.image : images[0] || '';
 }
 
 export function coverPhoto(entry) {
@@ -38,7 +39,7 @@ export function validateAlbumEntries(entries, collection) {
       throw new Error(`${collection}/${entry.slug}: gallery must be a list of named photos.`);
     }
     const photos = galleryPhotos(entry);
-    if (photos.some((photo) => !photo || typeof photo !== 'object' || Array.isArray(photo) || typeof photo.image !== 'string' || !imagePathPattern.test(photo.image) || photo.image.split('/').includes('..'))) {
+    if (photos.some((photo) => !photo || typeof photo !== 'object' || Array.isArray(photo) || typeof photo.image !== 'string' || !imagePathPattern.test(photo.image) || photo.image.slice('/images/'.length).split('/').some((part) => !part || part === '.' || part === '..'))) {
       throw new Error(`${collection}/${entry.slug}: gallery must contain local image paths.`);
     }
     if (photos.some((photo) => typeof photo.title !== 'string' || !photo.title.trim() || /\.(?:jpe?g|png|webp)$/i.test(photo.title.trim()))) {
@@ -47,9 +48,6 @@ export function validateAlbumEntries(entries, collection) {
     const images = galleryImages(entry);
     if (new Set(images).size !== images.length) {
       throw new Error(`${collection}/${entry.slug}: gallery contains duplicate images.`);
-    }
-    if (entry.image && !images.includes(entry.image)) {
-      throw new Error(`${collection}/${entry.slug}: cover image must also be in the gallery.`);
     }
   }
 }

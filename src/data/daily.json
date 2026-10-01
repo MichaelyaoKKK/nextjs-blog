@@ -9,8 +9,8 @@
     "copyFr": "De petites histoires dessinées pour les animaux de mes amis.",
     "image": "/images/mujlc0bc-ajig6ctr.jpeg",
     "gallery": [
-      "/images/mujlc0bc-ajig6ctr.jpeg",
-      "/images/mujlcqd6-qontf6be.jpeg"
+      { "image": "/images/mujlc0bc-ajig6ctr.jpeg", "title": "Animal Friends 1" },
+      { "image": "/images/mujlcqd6-qontf6be.jpeg", "title": "Animal Friends 2" }
     ]
   },
   {
@@ -23,9 +23,9 @@
     "copyFr": "Parfois, je dessine une case pour raconter une histoire imaginée.",
     "image": "/images/mujld7fo-snzw99mj.jpeg",
     "gallery": [
-      "/images/mujld7fo-snzw99mj.jpeg",
-      "/images/mujldh3t-0mljo7pf.jpeg",
-      "/images/mujlfgtq-xca3s3yy.jpeg"
+      { "image": "/images/mujld7fo-snzw99mj.jpeg", "title": "Comic Corner 1" },
+      { "image": "/images/mujldh3t-0mljo7pf.jpeg", "title": "Comic Corner 2" },
+      { "image": "/images/mujlfgtq-xca3s3yy.jpeg", "title": "Comic Corner 3" }
     ]
   },
   {
@@ -38,8 +38,8 @@
     "copyFr": "Une palette de couleurs pour garder mes moments préférés.",
     "image": "/images/mujlg8nk-chv455po.jpeg",
     "gallery": [
-      "/images/mujlg8nk-chv455po.jpeg",
-      "/images/mujlgqnc-tzch70ro.jpeg"
+      { "image": "/images/mujlg8nk-chv455po.jpeg", "title": "Color Diary 1" },
+      { "image": "/images/mujlgqnc-tzch70ro.jpeg", "title": "Color Diary 2" }
     ]
   }
 ]

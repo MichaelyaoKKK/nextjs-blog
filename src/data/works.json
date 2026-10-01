@@ -12,8 +12,8 @@
     "noteFr": "Le portrait volant du chat roux d’un ami.",
     "image": "/images/mujk7pd0-3e31aw1g.jpg",
     "gallery": [
-      "/images/muii7l50-f2nyythi.jpg",
-      "/images/mujk7pd0-3e31aw1g.jpg"
+      { "image": "/images/muii7l50-f2nyythi.jpg", "title": "Cloud Puppy 1" },
+      { "image": "/images/mujk7pd0-3e31aw1g.jpg", "title": "Cloud Puppy 2" }
     ]
   },
   {
@@ -29,8 +29,8 @@
     "noteFr": "Une brise d’été mise en bouteille, sur le papier.",
     "image": "/images/muii8d1r-ar734efv.jpg",
     "gallery": [
-      "/images/muii8d1r-ar734efv.jpg",
-      "/images/mujk8wjx-pv36bee8.jpg"
+      { "image": "/images/muii8d1r-ar734efv.jpg", "title": "Summer Soda 1" },
+      { "image": "/images/mujk8wjx-pv36bee8.jpg", "title": "Summer Soda 2" }
     ]
   },
   {
@@ -46,7 +46,7 @@
     "noteFr": "Une lettre adressée à la lune.",
     "image": "/images/muii8tr2-2cuf1lkw.jpg",
     "gallery": [
-      "/images/muii8tr2-2cuf1lkw.jpg"
+      { "image": "/images/muii8tr2-2cuf1lkw.jpg", "title": "Rabbit Post Office" }
     ]
   },
   {
@@ -62,8 +62,8 @@
     "noteFr": "Des fleurs, des amis et une pluie rose.",
     "image": "/images/muii94tt-hrtmzqq2.jpg",
     "gallery": [
-      "/images/muii94tt-hrtmzqq2.jpg",
-      "/images/mujk9ltl-r7nypny0.jpg"
+      { "image": "/images/muii94tt-hrtmzqq2.jpg", "title": "Garden Party 1" },
+      { "image": "/images/mujk9ltl-r7nypny0.jpg", "title": "Garden Party 2" }
     ]
   }
 ]

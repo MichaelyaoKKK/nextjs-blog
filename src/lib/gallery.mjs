@@ -1,13 +1,23 @@
 const imagePathPattern = /^\/images\/[a-zA-Z0-9][a-zA-Z0-9._/-]*\.(?:jpe?g|png|webp)$/i;
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
+/** @returns {{ image: string, title: string }[]} */
+export function galleryPhotos(entry) {
+  return Array.isArray(entry.gallery) ? entry.gallery : [];
+}
+
 /** @returns {string[]} */
 export function galleryImages(entry) {
-  return Array.isArray(entry.gallery) ? entry.gallery : [];
+  return galleryPhotos(entry).map((photo) => photo.image);
 }
 
 export function coverImage(entry) {
   return entry.image || galleryImages(entry)[0] || '';
+}
+
+export function coverPhoto(entry) {
+  const image = coverImage(entry);
+  return galleryPhotos(entry).find((photo) => photo.image === image);
 }
 
 export function albumPath(locale, collection, slug) {
@@ -25,12 +35,16 @@ export function validateAlbumEntries(entries, collection) {
     seenSlugs.add(entry.slug);
 
     if (entry.gallery != null && !Array.isArray(entry.gallery)) {
-      throw new Error(`${collection}/${entry.slug}: gallery must be a list of local image paths.`);
+      throw new Error(`${collection}/${entry.slug}: gallery must be a list of named photos.`);
+    }
+    const photos = galleryPhotos(entry);
+    if (photos.some((photo) => !photo || typeof photo !== 'object' || Array.isArray(photo) || typeof photo.image !== 'string' || !imagePathPattern.test(photo.image) || photo.image.split('/').includes('..'))) {
+      throw new Error(`${collection}/${entry.slug}: gallery must contain local image paths.`);
+    }
+    if (photos.some((photo) => typeof photo.title !== 'string' || !photo.title.trim() || /\.(?:jpe?g|png|webp)$/i.test(photo.title.trim()))) {
+      throw new Error(`${collection}/${entry.slug}: every photo needs a name without a file extension.`);
     }
     const images = galleryImages(entry);
-    if (images.some((path) => typeof path !== 'string' || !imagePathPattern.test(path) || path.split('/').includes('..'))) {
-      throw new Error(`${collection}/${entry.slug}: gallery must be a list of local image paths.`);
-    }
     if (new Set(images).size !== images.length) {
       throw new Error(`${collection}/${entry.slug}: gallery contains duplicate images.`);
     }

@@ -101,12 +101,15 @@ test('works and daily have translations and editable albums', () => {
       }
       if (entry.image !== undefined) assert.match(entry.image, /^(?:|\/images\/.+)$/);
       assert.ok(entry.gallery === undefined || Array.isArray(entry.gallery));
-      if (entry.image) assert.ok(entry.gallery?.includes(entry.image), 'cover must be in gallery');
+      if (entry.image) assert.ok(entry.gallery?.some((photo) => photo.image === entry.image), 'cover must be in gallery');
     }
     for (const field of fields) assert.match(config, new RegExp(`name: ${field}(?:,|\\s)`));
   }
   assert.match(source, /work\.image \? withBasePath\(base, work\.image\)/);
   assert.match(source, /project\.image \? withBasePath\(base, project\.image\)/);
+  assert.match(source, /coverPhoto\(work\)\?\.title/);
+  assert.match(source, /coverPhoto\(item\)\?\.title/);
+  assert.match(source, /group-hover:opacity-100 group-focus-within:opacity-100/);
   assert.match(source, /albumPath\(locale, 'works', work\.slug\)/);
   assert.match(source, /albumPath\(locale, 'daily', project\.slug\)/);
 });

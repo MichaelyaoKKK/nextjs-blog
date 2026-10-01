@@ -145,12 +145,16 @@ content:
       - { name: noteFr, label: 作品介绍（Français）, type: text, required: true }
       - { name: image, label: 封面图片（需从下方相册图片中选择）, type: image }
       - name: gallery
-        label: 相册图片（三语共用，可上传多张）
-        type: image
-        options:
-          multiple:
-            max: 30
-          unique: true
+        label: 相册照片（三语共用，可添加多张）
+        type: object
+        list:
+          max: 30
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - { name: image, label: 照片图片, type: image, required: true }
+          - { name: title, label: 照片名称（英文，不含文件后缀）, type: string, required: true }
 
   - name: daily
     label: 日常像一盒彩笔
@@ -168,9 +172,13 @@ content:
       - { name: copyFr, label: 日常内容（Français）, type: text, required: true }
       - { name: image, label: 封面图片（需从下方相册图片中选择）, type: image }
       - name: gallery
-        label: 相册图片（三语共用，可上传多张）
-        type: image
-        options:
-          multiple:
-            max: 30
-          unique: true
+        label: 相册照片（三语共用，可添加多张）
+        type: object
+        list:
+          max: 30
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - { name: image, label: 照片图片, type: image, required: true }
+          - { name: title, label: 照片名称（英文，不含文件后缀）, type: string, required: true }

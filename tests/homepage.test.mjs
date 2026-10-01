@@ -41,7 +41,7 @@ test('language switcher uses accessible localized static routes', () => {
 });
 
 test('only the Chinese hero headline uses the smaller type scale', () => {
-  assert.match(source, /locale === 'zh' \? 'text-\[clamp\(3\.1rem,6vw,5\.5rem\)\]' : 'text-\[clamp\(3\.6rem,8vw,8\.2rem\)\]'/);
+  assert.match(source, /locale === 'zh' \? 'text-\[clamp\(3\.1rem,6vw,5\.5rem\)\] leading-\[1\.1\]' : 'text-\[clamp\(3\.6rem,8vw,8\.2rem\)\] leading-\[0\.84\]'/);
   assert.match(source, /\{page\.heroTitleFirst\}<br \/>\{page\.heroTitleSecond\}/);
 });
 

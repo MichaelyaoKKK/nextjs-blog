@@ -1,19 +1,33 @@
 [
   {
     "slug": "cloud-puppy",
-    "title": "云朵小狗",
+    "title": "邻居的小狗",
     "titleEn": "Cloud Puppy",
     "titleFr": "Unchiot dans les nuages",
     "category": "动物",
     "categoryEn": "Animals",
     "categoryFr": "Animaux",
-    "note": "给朋友家的小黄画了一张会飞的肖像",
-    "noteEn": "A flying portrait of a friend's orange puppy.",
+    "note": "给朋友家的小黄画了一张俏皮的肖像",
+    "noteEn": "A flying portrait of a friend's puppy.",
     "noteFr": "Le portrait volant du chat roux d’un ami.",
-    "image": "/images/mujk7pd0-3e31aw1g.jpg",
+    "image": "/images/2026/Ben 1.jpeg",
     "gallery": [
-      { "image": "/images/muii7l50-f2nyythi.jpg", "title": "Cloud Puppy 1" },
-      { "image": "/images/mujk7pd0-3e31aw1g.jpg", "title": "Cloud Puppy 2" }
+      {
+        "image": "/images/2026/Artium.jpeg",
+        "title": "Artium@2026"
+      },
+      {
+        "image": "/images/2026/Artium 1.jpg",
+        "title": "Artium@2026"
+      },
+      {
+        "image": "/images/2026/Ben.jpeg",
+        "title": "Ben@2026"
+      },
+      {
+        "image": "/images/2026/Ben 1.jpeg",
+        "title": "Ben@2026"
+      }
     ]
   },
   {
@@ -27,10 +41,16 @@
     "note": "把放学路上的晚风装进瓶子里",
     "noteEn": "A summer breeze, bottled up in a drawing.",
     "noteFr": "Une brise d’été mise en bouteille, sur le papier.",
-    "image": "/images/muii8d1r-ar734efv.jpg",
+    "image": "/images/2025/Mosaic Labubu.jpeg",
     "gallery": [
-      { "image": "/images/muii8d1r-ar734efv.jpg", "title": "Summer Soda 1" },
-      { "image": "/images/mujk8wjx-pv36bee8.jpg", "title": "Summer Soda 2" }
+      {
+        "image": "/images/2025/Mosaic Labubu.jpeg",
+        "title": "Summer Soda@2025"
+      },
+      {
+        "image": "/images/2025/1.jpg",
+        "title": "Natakuvara@2025"
+      }
     ]
   },
   {
@@ -44,9 +64,16 @@
     "note": "一封寄给月亮的信",
     "noteEn": "A letter addressed to the moon.",
     "noteFr": "Une lettre adressée à la lune.",
-    "image": "/images/muii8tr2-2cuf1lkw.jpg",
+    "image": "/images/2025/Mosaic Donation 8.jpeg",
     "gallery": [
-      { "image": "/images/muii8tr2-2cuf1lkw.jpg", "title": "Rabbit Post Office" }
+      {
+        "image": "/images/2025/Mosaic Donation 8.jpeg",
+        "title": "Happy life 1 @2025"
+      },
+      {
+        "image": "/images/2025/Mosaic Donation 1st-1.jpeg",
+        "title": "Happy life 2 @2025"
+      }
     ]
   },
   {
@@ -54,16 +81,25 @@
     "title": "花园派对",
     "titleEn": "Garden Party",
     "titleFr": "Fête au jardin",
-    "category": "人物",
-    "categoryEn": "People",
-    "categoryFr": "Personnages",
-    "note": "花朵、朋友和一场粉色的雨。",
+    "category": "想象力",
+    "categoryEn": "Imagination",
+    "categoryFr": "Imagination",
+    "note": "花朵、朋友和一场粉色的雨",
     "noteEn": "Flowers, friends, and a shower of pink rain.",
     "noteFr": "Des fleurs, des amis et une pluie rose.",
-    "image": "/images/muii94tt-hrtmzqq2.jpg",
     "gallery": [
-      { "image": "/images/muii94tt-hrtmzqq2.jpg", "title": "Garden Party 1" },
-      { "image": "/images/mujk9ltl-r7nypny0.jpg", "title": "Garden Party 2" }
+      {
+        "image": "/images/2025/3.jpeg",
+        "title": "Garden Party@2025"
+      },
+      {
+        "image": "/images/2026/The Paradise of Pandas.jpg",
+        "title": "Paradise of Pandas@2026"
+      },
+      {
+        "image": "/images/2026/War & Peace.jpeg",
+        "title": "War & Peace @2026"
+      }
     ]
   }
 ]

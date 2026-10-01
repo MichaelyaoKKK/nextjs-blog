@@ -36,7 +36,8 @@ test('existing covers are retained in their albums and all images exist', async 
     for (const entry of entries) {
       for (const image of entry.gallery) {
         const file = new URL(`../public${image}`, import.meta.url);
-        assert.ok((await stat(file)).isFile(), `${collection}/${entry.slug}: ${image}`);
+        const artwork = await stat(file).catch(() => null);
+        assert.ok(artwork?.isFile(), `${collection}/${entry.slug}: ${image} must exist`);
       }
     }
   }

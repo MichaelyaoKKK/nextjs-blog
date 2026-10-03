@@ -6,6 +6,7 @@ import works from '../data/works.json';
 import daily from '../data/daily.json';
 import { withBasePath } from '../lib/site-urls.mjs';
 import { albumPath, coverImage, coverPhoto, validateAlbumEntries } from '../lib/gallery.mjs';
+import { categoryTargets } from '../lib/category-links.mjs';
 import '@fontsource/cabin-sketch/400.css';
 import '@fontsource/cabin-sketch/700.css';
 import '@fontsource-variable/noto-sans-sc';
@@ -42,6 +43,7 @@ const displayedWorks = works.map((work) => ({
   image: coverImage(work),
   coverTitle: coverPhoto(work)?.title || ''
 }));
+const workCategoryTargets = categoryTargets(displayedWorks);
 const secondWorkColumnStart = Math.ceil(displayedWorks.length / 2);
 const displayedDaily = daily.map((item) => ({
   slug: item.slug,
@@ -116,7 +118,10 @@ const categories = [
           <div>
             <p class="reveal-text text-2xl font-medium leading-relaxed text-[#40394c] dark:text-[#f1eaf4]">{page.aboutBody}</p>
             <div class="mt-10 grid grid-cols-2 gap-3 text-sm font-bold sm:grid-cols-4">
-              {page.aboutTags.map((tag, index) => <span class:list={['rounded-2xl p-4', aboutTagClasses[index % aboutTagClasses.length]]}>{tag}</span>)}
+              {page.aboutTags.map((tag, index) => workCategoryTargets.has(tag)
+                ? <a href={`#${workCategoryTargets.get(tag)}`} class:list={['rounded-2xl p-4 transition-transform hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef596f]', aboutTagClasses[index % aboutTagClasses.length]]}>{tag}</a>
+                : <span class:list={['rounded-2xl p-4', aboutTagClasses[index % aboutTagClasses.length]]}>{tag}</span>
+              )}
             </div>
           </div>
         </div>
@@ -130,7 +135,7 @@ const categories = [
           </div>
           <div class="sm:columns-2 sm:gap-7">
             {displayedWorks.map((work, index) => (
-              <article class:list={['work-card group mb-6 break-inside-avoid overflow-hidden rounded-[2rem] bg-[#39334d] sm:mb-7', index === secondWorkColumnStart ? 'sm:mt-14 sm:break-before-column' : '']}>
+              <article id={workCategoryTargets.get(work.category) === `work-${work.slug}` ? `work-${work.slug}` : undefined} class:list={['work-card group mb-6 break-inside-avoid scroll-mt-6 overflow-hidden rounded-[2rem] bg-[#39334d] sm:mb-7', index === secondWorkColumnStart ? 'sm:mt-14 sm:break-before-column' : '']}>
                 <a href={withBasePath(base, albumPath(locale, 'works', work.slug))} class="block h-full focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-[-4px] focus-visible:outline-[#ffcf69]">
                   <div class="relative bg-[#302b40] p-3 sm:p-4">
                     <img src={work.image ? withBasePath(base, work.image) : placeholderImage} alt="" class="block h-auto w-full object-contain" style={work.image ? undefined : `filter: hue-rotate(${index * 48}deg)`} loading="lazy" />

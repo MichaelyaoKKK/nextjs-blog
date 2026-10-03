@@ -21,9 +21,14 @@
   "aboutTitleFirst": "Always making art",
   "aboutTitleSecond": "since I was little.",
   "aboutBody": "My first crayon drawing was a round little cat. Later, I joined art contests for fun and drew friends' pets. Drawing is still how I explore the world and share a little joy.",
-  "aboutTags": ["People", "Animals", "Comics", "Imagination"],
+  "aboutTags": [
+    "People",
+    "Animals",
+    "Comics",
+    "Imagination"
+  ],
   "worksTitle": "My Art Universe",
-  "worksIntro": "A few favorite pieces. Each drawing is a little world waiting to be discovered.",
+  "worksIntro": "Each drawing is a little world waiting to be discovered.",
   "dailyTitleFirst": "Everyday life,",
   "dailyTitleSecond": "a box of colors.",
   "dailyIntro": "Sometimes it's an evening walk; sometimes it's a doodle with no plan at all.",

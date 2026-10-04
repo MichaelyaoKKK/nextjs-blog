@@ -9,8 +9,14 @@
     "copyFr": "De petites histoires dessinées pour les animaux de mes amis.",
     "image": "/images/mujlc0bc-ajig6ctr.jpeg",
     "gallery": [
-      { "image": "/images/mujlc0bc-ajig6ctr.jpeg", "title": "Animal Friends 1" },
-      { "image": "/images/mujlcqd6-qontf6be.jpeg", "title": "Animal Friends 2" }
+      {
+        "image": "/images/mujlc0bc-ajig6ctr.jpeg",
+        "title": "Animal Friends 1"
+      },
+      {
+        "image": "/images/mujlcqd6-qontf6be.jpeg",
+        "title": "Animal Friends 2"
+      }
     ]
   },
   {
@@ -23,9 +29,22 @@
     "copyFr": "Parfois, je dessine une case pour raconter une histoire imaginée.",
     "image": "/images/mujld7fo-snzw99mj.jpeg",
     "gallery": [
-      { "image": "/images/mujld7fo-snzw99mj.jpeg", "title": "Comic Corner 1" },
-      { "image": "/images/mujldh3t-0mljo7pf.jpeg", "title": "Comic Corner 2" },
-      { "image": "/images/mujlfgtq-xca3s3yy.jpeg", "title": "Comic Corner 3" }
+      {
+        "image": "/images/mujld7fo-snzw99mj.jpeg",
+        "title": "Comic Corner 1"
+      },
+      {
+        "image": "/images/mujldh3t-0mljo7pf.jpeg",
+        "title": "Comic Corner 2"
+      },
+      {
+        "image": "/images/mujlfgtq-xca3s3yy.jpeg",
+        "title": "Comic Corner 3"
+      },
+      {
+        "image": "/images/2025/Gift for Fathers Day.jpeg",
+        "title": "Gift for father's day@2025"
+      }
     ]
   },
   {
@@ -38,8 +57,34 @@
     "copyFr": "Une palette de couleurs pour garder mes moments préférés.",
     "image": "/images/mujlg8nk-chv455po.jpeg",
     "gallery": [
-      { "image": "/images/mujlg8nk-chv455po.jpeg", "title": "Color Diary 1" },
-      { "image": "/images/mujlgqnc-tzch70ro.jpeg", "title": "Color Diary 2" }
+      {
+        "image": "/images/mujlg8nk-chv455po.jpeg",
+        "title": "Color Diary 1"
+      },
+      {
+        "image": "/images/mujlgqnc-tzch70ro.jpeg",
+        "title": "beach(oil painting)@2026"
+      },
+      {
+        "image": "/images/2024/1st time doing oil painting.jpg",
+        "title": "1st oil painting@2024"
+      },
+      {
+        "image": "/images/2024/2.jpeg",
+        "title": "Panda@2024"
+      },
+      {
+        "image": "/images/2024/10.jpg",
+        "title": "Lily@2024"
+      },
+      {
+        "image": "/images/2024/Xmas gift for Susan.jpg",
+        "title": "Xmas Gift for Susan@2024"
+      },
+      {
+        "image": "/images/2025/2-1.jpeg",
+        "title": "Goldfish@2025"
+      }
     ]
   }
 ]

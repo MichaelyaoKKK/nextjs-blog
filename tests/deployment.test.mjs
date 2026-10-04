@@ -15,12 +15,12 @@ const readConfig = (enabled) => JSON.parse(execFileSync(process.execPath, [
 }));
 
 test('local preview keeps root URLs', () => {
-  assert.equal(readConfig(false).base, '/');
+  assert.deepEqual(readConfig(false), { site: 'https://alisayao.com', base: '/' });
 });
 
 test('GitHub Pages build uses the repository path', () => {
   assert.deepEqual(readConfig(true), {
-    site: 'https://MichaelyaoKKK.github.io',
+    site: 'https://alisayao.com',
     base: '/nextjs-blog'
   });
 });

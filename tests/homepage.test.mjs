@@ -39,6 +39,8 @@ test('language switcher uses accessible localized static routes', () => {
   for (const locale of ['zh-CN', 'en', 'fr']) assert.ok(source.includes(`hreflang="${locale}"`));
   assert.match(source, /aria-current=\{locale === language\.code \? 'page'/);
   assert.match(source, /aria-label=\{page\.languageSwitcherLabel\}/);
+  assert.match(source, /rel="canonical" href=\{canonicalSiteUrl\(canonicalPath\)\}/);
+  assert.match(source, /hreflang="x-default" href=\{canonicalSiteUrl\('\/'\)\}/);
 });
 
 test('only the Chinese hero headline uses the smaller type scale', () => {

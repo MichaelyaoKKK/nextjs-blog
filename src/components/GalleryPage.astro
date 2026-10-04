@@ -5,7 +5,7 @@ import pageFr from '../data/page.fr.json';
 import works from '../data/works.json';
 import daily from '../data/daily.json';
 import { albumPath, galleryPhotos, validateAlbumEntries } from '../lib/gallery.mjs';
-import { withBasePath } from '../lib/site-urls.mjs';
+import { canonicalSiteUrl, withBasePath } from '../lib/site-urls.mjs';
 import '@fontsource/cabin-sketch/400.css';
 import '@fontsource/cabin-sketch/700.css';
 import '@fontsource-variable/noto-sans-sc';
@@ -43,6 +43,7 @@ const languages = [
   { code: 'en', label: 'EN', href: withBasePath(base, albumPath('en', collection, slug)) },
   { code: 'fr', label: 'FR', href: withBasePath(base, albumPath('fr', collection, slug)) }
 ] as const;
+const canonicalPath = albumPath(locale, collection, slug);
 ---
 
 <!doctype html>
@@ -52,7 +53,9 @@ const languages = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description || page.metaDescription} />
     <title>{title} | {page.siteTitle}</title>
-    {languages.map((language) => <link rel="alternate" hreflang={language.code === 'zh' ? 'zh-CN' : language.code} href={language.href} />)}
+    <link rel="canonical" href={canonicalSiteUrl(canonicalPath)} />
+    {languages.map((language) => <link rel="alternate" hreflang={language.code === 'zh' ? 'zh-CN' : language.code} href={canonicalSiteUrl(albumPath(language.code, collection, slug))} />)}
+    <link rel="alternate" hreflang="x-default" href={canonicalSiteUrl(albumPath('zh', collection, slug))} />
   </head>
   <body class="bg-[#fffaf2] font-body text-[#27223a] antialiased dark:bg-[#1d1c2b] dark:text-[#fff6ec]">
     <main class="min-h-[100dvh] px-5 pb-20 sm:px-8 lg:px-12">

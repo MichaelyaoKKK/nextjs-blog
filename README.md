@@ -19,4 +19,6 @@
 
 在 Pages CMS 中修改作品或日常时，请同时填写三种语言的文字；图片只需上传一次。直接访问 `/`、`/en/`、`/fr/` 即可预览对应语言；例如 `/works/cloud-puppy/`、`/en/works/cloud-puppy/` 和 `/fr/works/cloud-puppy/` 是同一相册的三种语言。相册内切换语言会保留当前相册。
 
-项目已推送到 [GitHub 仓库](https://github.com/MichaelyaoKKK/nextjs-blog) 的 `main` 分支；原 Next.js 模板保存在 `backup/nextjs-blog-759fdbf` 分支。[GitHub Pages](https://michaelyaokkk.github.io/nextjs-blog/) 会通过 `.github/workflows/deploy.yml` 自动测试、构建并发布三种语言的页面。Pages CMS 保存内容会产生 Git 提交并触发同一部署流程；家长仍应在发布后检查图片、文字及隐私信息。
+项目已推送到 [GitHub 仓库](https://github.com/MichaelyaoKKK/nextjs-blog) 的 `main` 分支；原 Next.js 模板保存在 `backup/nextjs-blog-759fdbf` 分支。正式网址为 [alisayao.com](https://alisayao.com/)，由 Cloudflare Pages 连接 GitHub 自动构建发布，构建命令为 `pnpm test && pnpm run build`，输出目录为 `dist`。Pages CMS 保存内容会产生 Git 提交并触发发布；家长仍应在发布后检查图片、文字及隐私信息。
+
+现有 [GitHub Pages](https://michaelyaokkk.github.io/nextjs-blog/) 工作流仍保留作旧链接和备用站点，构建时设置 `GITHUB_PAGES=true`，因此资源继续使用 `/nextjs-blog/` 路径。两边页面的 canonical 与多语言 alternate 均指向正式域名，避免旧站被视为另一组正式页面。如需让 `www.alisayao.com` 跳转到根域名，须在 Cloudflare 控制台添加 `www` DNS 记录和 301 重定向；仓库代码无法代替域名级 DNS 设置。

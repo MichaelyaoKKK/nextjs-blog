@@ -4,7 +4,7 @@ import pageEn from '../data/page.en.json';
 import pageFr from '../data/page.fr.json';
 import works from '../data/works.json';
 import daily from '../data/daily.json';
-import { withBasePath } from '../lib/site-urls.mjs';
+import { canonicalSiteUrl, withBasePath } from '../lib/site-urls.mjs';
 import { albumPath, coverImage, coverPhoto, validateAlbumEntries } from '../lib/gallery.mjs';
 import { categoryTargets } from '../lib/category-links.mjs';
 import '@fontsource/cabin-sketch/400.css';
@@ -27,6 +27,7 @@ const languages = [
   { code: 'en', label: 'EN', href: withBasePath(base, '/en/') },
   { code: 'fr', label: 'FR', href: withBasePath(base, '/fr/') }
 ] as const;
+const canonicalPath = locale === 'zh' ? '/' : `/${locale}/`;
 
 const placeholderImage = withBasePath(base, '/images/artwork-placeholder.svg');
 const aboutTagClasses = [
@@ -66,9 +67,11 @@ const categories = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={page.metaDescription} />
     <title>{page.siteTitle}</title>
-    <link rel="alternate" hreflang="zh-CN" href={languages[0].href} />
-    <link rel="alternate" hreflang="en" href={languages[1].href} />
-    <link rel="alternate" hreflang="fr" href={languages[2].href} />
+    <link rel="canonical" href={canonicalSiteUrl(canonicalPath)} />
+    <link rel="alternate" hreflang="zh-CN" href={canonicalSiteUrl('/')} />
+    <link rel="alternate" hreflang="en" href={canonicalSiteUrl('/en/')} />
+    <link rel="alternate" hreflang="fr" href={canonicalSiteUrl('/fr/')} />
+    <link rel="alternate" hreflang="x-default" href={canonicalSiteUrl('/')} />
   </head>
   <body class="bg-[#fffaf2] font-body text-[#27223a] antialiased transition-colors duration-500 dark:bg-[#1d1c2b] dark:text-[#fff6ec]">
     <main class="w-full max-w-full overflow-x-hidden">

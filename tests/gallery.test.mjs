@@ -81,6 +81,8 @@ test('all locales render static album routes with keyboard-friendly browsing and
     assert.match(source, /GalleryPage/);
   }
   assert.match(galleryPage, /data-gallery-main/);
+  assert.match(galleryPage, /rel="canonical" href=\{canonicalSiteUrl\(canonicalPath\)\}/);
+  assert.match(galleryPage, /hreflang="x-default"/);
   assert.match(galleryPage, /data-gallery-previous/);
   assert.match(galleryPage, /data-gallery-next/);
   assert.match(galleryPage, /data-gallery-thumb/);

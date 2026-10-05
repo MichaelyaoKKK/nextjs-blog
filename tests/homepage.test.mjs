@@ -63,7 +63,7 @@ test('work covers form a staggered gallery with complete artwork and separate ca
   assert.match(worksMarkup, /sm:columns-2 sm:gap-7/);
   assert.match(worksMarkup, /mb-6 break-inside-avoid/);
   assert.match(worksMarkup, /index === secondWorkColumnStart \? 'sm:mt-14 sm:break-before-column'/);
-  assert.match(worksMarkup, /<button type="button" data-preview-image[\s\S]*?<img[^>]+block h-auto w-full object-contain/);
+  assert.match(worksMarkup, /<a href=\{withBasePath\(base, albumPath\(locale, 'works', work\.slug\)\)\}[^>]*>\s*<img[^>]+block h-auto w-full object-contain/);
   assert.doesNotMatch(worksMarkup, /aspect-\[/);
   assert.doesNotMatch(worksMarkup, /object-cover|bg-gradient-to-t|group-hover:scale/);
   assert.match(worksMarkup, /<\/div>\s*<a href=\{withBasePath\(base, albumPath\(locale, 'works', work\.slug\)\)\} class="block p-6/);

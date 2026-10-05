@@ -25,9 +25,9 @@ if (!entry) throw new Error(`Album not found: ${collection}/${slug}`);
 
 const page = { zh: pageZh, en: pageEn, fr: pageFr }[locale];
 const labels = {
-  zh: { back: '返回主页', gallery: '图片相册', empty: '这个相册还没有图片，稍后再来看看。', previous: '上一张', next: '下一张', view: '查看第', photo: '张图片', keyboard: '聚焦相册后，可用左右方向键切换图片。' },
-  en: { back: 'Back to home', gallery: 'Photo album', empty: 'This album has no images yet. Please check back later.', previous: 'Previous', next: 'Next', view: 'View image ', photo: '', keyboard: 'Focus the gallery and use the left or right arrow key to change images.' },
-  fr: { back: 'Retour à l’accueil', gallery: 'Album photos', empty: 'Cet album ne contient pas encore d’images. Revenez bientôt.', previous: 'Précédente', next: 'Suivante', view: 'Voir l’image ', photo: '', keyboard: 'Placez le focus sur l’album et utilisez les flèches gauche ou droite pour changer d’image.' }
+  zh: { back: '返回主页', gallery: '图片相册', empty: '这个相册还没有图片，稍后再来看看。', previous: '上一张', next: '下一张', view: '查看第', photo: '张图片', keyboard: '聚焦相册后，可用左右方向键切换图片。', open: '放大查看：', dialog: '图片查看器', close: '关闭', actual: '原图尺寸', fit: '适应屏幕', hint: '双击图片切换缩放' },
+  en: { back: 'Back to home', gallery: 'Photo album', empty: 'This album has no images yet. Please check back later.', previous: 'Previous', next: 'Next', view: 'View image ', photo: '', keyboard: 'Focus the gallery and use the left or right arrow key to change images.', open: 'View larger image: ', dialog: 'Image viewer', close: 'Close', actual: 'Actual size', fit: 'Fit screen', hint: 'Double-click the image to zoom' },
+  fr: { back: 'Retour à l’accueil', gallery: 'Album photos', empty: 'Cet album ne contient pas encore d’images. Revenez bientôt.', previous: 'Précédente', next: 'Suivante', view: 'Voir l’image ', photo: '', keyboard: 'Placez le focus sur l’album et utilisez les flèches gauche ou droite pour changer d’image.', open: 'Agrandir l’image : ', dialog: 'Visionneuse d’images', close: 'Fermer', actual: 'Taille réelle', fit: 'Adapter à l’écran', hint: 'Double-cliquez sur l’image pour zoomer' }
 }[locale];
 const htmlLang = { zh: 'zh-CN', en: 'en', fr: 'fr' }[locale];
 const title = locale === 'en' ? entry.titleEn : locale === 'fr' ? entry.titleFr : entry.title;
@@ -82,7 +82,9 @@ const canonicalPath = albumPath(locale, collection, slug);
         {photos.length ? (
           <section data-gallery tabindex={photos.length > 1 ? 0 : undefined} aria-label={`${title} ${labels.gallery}`} class="rounded-[2rem] bg-[#f4e7dc] p-3 outline-none focus-visible:ring-4 focus-visible:ring-[#ef596f] dark:bg-[#302d40] sm:p-6">
             <div class="group relative grid min-h-[18rem] place-items-center overflow-hidden rounded-[1.4rem] bg-[#ebe4df] dark:bg-[#242234] sm:min-h-[30rem]">
-              <img data-gallery-main src={withBasePath(base, photos[0].image)} alt={photos[0].title} class="max-h-[75dvh] w-full object-contain" />
+              <button type="button" data-gallery-open aria-label={`${labels.open}${photos[0].title}`} data-open-label={labels.open} class="block w-full cursor-zoom-in focus-visible:rounded-[1.4rem] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#ef596f]">
+                <img data-gallery-main src={withBasePath(base, photos[0].image)} alt={photos[0].title} class="max-h-[75dvh] w-full object-contain" />
+              </button>
               <span data-gallery-hover-title aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#27223a]/85 to-transparent px-5 pb-5 pt-12 text-lg font-bold text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">{photos[0].title}</span>
             </div>
             <p data-gallery-title aria-live="polite" class="mt-4 text-center text-lg font-bold text-[#27223a] dark:text-[#fff6ec]">{photos[0].title}</p>
@@ -111,7 +113,22 @@ const canonicalPath = albumPath(locale, collection, slug);
       </div>
     </main>
 
+    <dialog id="gallery-viewer" aria-label={labels.dialog} data-actual-label={labels.actual} data-fit-label={labels.fit} class="m-auto max-h-[100dvh] max-w-[100vw] overflow-hidden rounded-[1.5rem] border-0 bg-[#27223a] p-0 text-white shadow-2xl backdrop:bg-[#141120]/90">
+      <div class="flex max-h-[100dvh] flex-col">
+        <div class="flex items-center gap-3 px-4 py-3 sm:px-6">
+          <span data-viewer-title class="min-w-0 flex-1 truncate font-bold"></span>
+          <span class="hidden text-xs text-white/70 sm:inline">{labels.hint}</span>
+          <button type="button" data-viewer-zoom aria-pressed="false" class="shrink-0 rounded-full border border-white/40 px-3 py-2 text-sm font-bold hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{labels.actual}</button>
+          <button type="button" data-viewer-close class="shrink-0 rounded-full border border-white/40 px-3 py-2 text-sm font-bold hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{labels.close}</button>
+        </div>
+        <div data-viewer-viewport class="flex h-[calc(100dvh-5rem)] w-[min(96vw,1200px)] items-center justify-center overflow-auto p-4">
+          <img data-viewer-image alt="" draggable="false" class="block max-h-full max-w-full shrink-0 cursor-zoom-in select-none object-contain" />
+        </div>
+      </div>
+    </dialog>
+
     <script>
+      import { canZoomToOriginal } from '../lib/image-viewer.mjs';
       const toggle = document.querySelector<HTMLButtonElement>('#gallery-theme-toggle');
       toggle?.addEventListener('click', () => {
         document.documentElement.classList.toggle('dark');
@@ -126,6 +143,7 @@ const canonicalPath = albumPath(locale, collection, slug);
         const counter = gallery.querySelector<HTMLElement>('[data-gallery-count]');
         const previous = gallery.querySelector<HTMLButtonElement>('[data-gallery-previous]');
         const next = gallery.querySelector<HTMLButtonElement>('[data-gallery-next]');
+        const openButton = gallery.querySelector<HTMLButtonElement>('[data-gallery-open]');
         const thumbs = [...gallery.querySelectorAll<HTMLButtonElement>('[data-gallery-thumb]')];
         let active = 0;
 
@@ -134,6 +152,7 @@ const canonicalPath = albumPath(locale, collection, slug);
           active = index;
           image.src = thumbs[index].dataset.src || '';
           image.alt = thumbs[index].dataset.title || '';
+          openButton?.setAttribute('aria-label', `${openButton.dataset.openLabel || ''}${image.alt}`);
           if (title) title.textContent = image.alt;
           if (hoverTitle) hoverTitle.textContent = image.alt;
           if (counter) counter.textContent = `${index + 1} / ${thumbs.length}`;
@@ -148,6 +167,62 @@ const canonicalPath = albumPath(locale, collection, slug);
         gallery.addEventListener('keydown', (event) => {
           if (event.key === 'ArrowLeft' && active > 0) { event.preventDefault(); show(active - 1); }
           if (event.key === 'ArrowRight' && active < thumbs.length - 1) { event.preventDefault(); show(active + 1); }
+        });
+
+        const viewer = document.querySelector<HTMLDialogElement>('#gallery-viewer');
+        const viewerImage = viewer?.querySelector<HTMLImageElement>('[data-viewer-image]');
+        const viewerTitle = viewer?.querySelector<HTMLElement>('[data-viewer-title]');
+        const viewerViewport = viewer?.querySelector<HTMLElement>('[data-viewer-viewport]');
+        const zoomButton = viewer?.querySelector<HTMLButtonElement>('[data-viewer-zoom]');
+        const closeButton = viewer?.querySelector<HTMLButtonElement>('[data-viewer-close]');
+        let zoomed = false;
+        let previousOverflow = '';
+
+        const setViewerZoom = (requested: boolean) => {
+          if (!viewer || !viewerImage || !viewerViewport || !zoomButton) return;
+          const canZoom = canZoomToOriginal(viewerImage.naturalWidth, viewerImage.naturalHeight, viewerViewport.clientWidth - 32, viewerViewport.clientHeight - 32);
+          zoomed = requested && canZoom;
+          viewerImage.style.width = zoomed ? `${viewerImage.naturalWidth}px` : '';
+          viewerImage.style.height = zoomed ? `${viewerImage.naturalHeight}px` : '';
+          viewerImage.style.maxWidth = zoomed ? 'none' : '';
+          viewerImage.style.maxHeight = zoomed ? 'none' : '';
+          viewerImage.classList.toggle('cursor-zoom-out', zoomed);
+          viewerImage.classList.toggle('cursor-zoom-in', !zoomed);
+          viewerViewport.classList.toggle('items-start', zoomed);
+          viewerViewport.classList.toggle('justify-start', zoomed);
+          viewerViewport.classList.toggle('items-center', !zoomed);
+          viewerViewport.classList.toggle('justify-center', !zoomed);
+          zoomButton.textContent = zoomed ? viewer.dataset.fitLabel || '' : viewer.dataset.actualLabel || '';
+          zoomButton.disabled = !canZoom;
+          zoomButton.setAttribute('aria-pressed', String(zoomed));
+          requestAnimationFrame(() => {
+            viewerViewport.scrollLeft = zoomed ? (viewerViewport.scrollWidth - viewerViewport.clientWidth) / 2 : 0;
+            viewerViewport.scrollTop = zoomed ? (viewerViewport.scrollHeight - viewerViewport.clientHeight) / 2 : 0;
+          });
+        };
+
+        viewerImage?.addEventListener('load', () => setViewerZoom(false));
+        viewerImage?.addEventListener('dblclick', () => setViewerZoom(!zoomed));
+        zoomButton?.addEventListener('click', () => setViewerZoom(!zoomed));
+        closeButton?.addEventListener('click', () => viewer?.close());
+        openButton?.addEventListener('click', () => {
+          if (!viewer || !image || !viewerImage || !viewerTitle) return;
+          viewerTitle.textContent = image.alt;
+          viewerImage.alt = image.alt;
+          viewerImage.src = image.src;
+          previousOverflow = document.documentElement.style.overflow;
+          document.documentElement.style.overflow = 'hidden';
+          viewer.showModal();
+          if (viewerImage.complete) setViewerZoom(false);
+          closeButton?.focus();
+        });
+        viewer?.addEventListener('click', (event) => {
+          if (event.target === viewer) viewer.close();
+        });
+        viewer?.addEventListener('close', () => {
+          document.documentElement.style.overflow = previousOverflow;
+          viewerImage?.removeAttribute('src');
+          openButton?.focus();
         });
       }
     </script>

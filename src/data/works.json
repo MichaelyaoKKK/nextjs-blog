@@ -21,6 +21,14 @@
         "title": "Artium@2026"
       },
       {
+        "image": "/images/2026/Luna 6.jpeg",
+        "title": "Luna@2026"
+      },
+      {
+        "image": "/images/2026/Luna 7.jpg",
+        "title": "Luna@2026"
+      },
+      {
         "image": "/images/2026/Ben.jpeg",
         "title": "Ben@2026"
       },
@@ -37,24 +45,28 @@
         "title": "Moka@2025"
       },
       {
+        "image": "/images/2025/Sheila's pet Molly.jpeg",
+        "title": "Sheila's cats@2025"
+      },
+      {
         "image": "/images/2025/Sheila's pet 1.jpeg",
-        "title": "Sheila's cat@2025"
+        "title": "Sheila's cats@2025"
       },
       {
         "image": "/images/2025/Sheila's pet 5.jpeg",
-        "title": "Sheila's cat@2025"
+        "title": "Sheila's cats@2025"
       },
       {
         "image": "/images/2025/Sheila's pet 2.jpeg",
-        "title": "Sheila's pet@2025"
+        "title": "Sheila's dogs@2025"
       },
       {
         "image": "/images/2025/Sheila's pet 4.jpg",
-        "title": "Sheila's pet@2025"
+        "title": "Sheila's dogs@2025"
       },
       {
         "image": "/images/2025/Sheila's pet 6.jpeg",
-        "title": "Sheila's pet@2025"
+        "title": "Sheila's dogs@2025"
       },
       {
         "image": "/images/2025/Clementine 1.jpeg",
@@ -63,14 +75,6 @@
       {
         "image": "/images/2025/Clementine.jpeg",
         "title": "Clementine@2025"
-      },
-      {
-        "image": "/images/2026/Luna 6.jpeg",
-        "title": "Luna@2026"
-      },
-      {
-        "image": "/images/2026/Luna 7.jpg",
-        "title": "Luna@2026"
       }
     ]
   },

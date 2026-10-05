@@ -21,6 +21,11 @@ validateAlbumEntries(works, 'works');
 validateAlbumEntries(daily, 'daily');
 const page = { zh: pageZh, en: pageEn, fr: pageFr }[locale];
 const htmlLang = { zh: 'zh-CN', en: 'en', fr: 'fr' }[locale];
+const viewerLabels = {
+  zh: { dialog: '图片查看器', open: '查看大图：', close: '关闭', actual: '原图尺寸', fit: '适应屏幕', hint: '双击图片切换缩放' },
+  en: { dialog: 'Image viewer', open: 'View larger image: ', close: 'Close', actual: 'Actual size', fit: 'Fit screen', hint: 'Double-click the image to zoom' },
+  fr: { dialog: 'Visionneuse d’images', open: 'Agrandir l’image : ', close: 'Fermer', actual: 'Taille réelle', fit: 'Adapter à l’écran', hint: 'Double-cliquez sur l’image pour zoomer' }
+}[locale];
 const base = import.meta.env.BASE_URL;
 const languages = [
   { code: 'zh', label: '中', href: withBasePath(base, '/') },
@@ -139,14 +144,14 @@ const categories = [
           <div class="sm:columns-2 sm:gap-7">
             {displayedWorks.map((work, index) => (
               <article id={workCategoryTargets.get(work.category) === `work-${work.slug}` ? `work-${work.slug}` : undefined} class:list={['work-card group mb-6 break-inside-avoid scroll-mt-6 overflow-hidden rounded-[2rem] bg-[#39334d] sm:mb-7', index === secondWorkColumnStart ? 'sm:mt-14 sm:break-before-column' : '']}>
-                <a href={withBasePath(base, albumPath(locale, 'works', work.slug))} class="block h-full focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-[-4px] focus-visible:outline-[#ffcf69]">
-                  <div class="relative bg-[#302b40] p-3 sm:p-4">
-                    <img src={work.image ? withBasePath(base, work.image) : placeholderImage} alt="" class="block h-auto w-full object-contain" style={work.image ? undefined : `filter: hue-rotate(${index * 48}deg)`} loading="lazy" />
-                    {work.coverTitle && <span aria-hidden="true" class="pointer-events-none absolute inset-x-3 bottom-3 truncate rounded-b-[1.25rem] bg-[#27223a]/85 px-4 py-3 text-sm font-bold text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 sm:inset-x-4 sm:bottom-4">{work.coverTitle}</span>}
-                  </div>
-                  <div class="p-6 sm:p-7">
+                <div class="relative bg-[#302b40] p-3 sm:p-4">
+                  <button type="button" data-preview-image data-preview-src={work.image ? withBasePath(base, work.image) : placeholderImage} data-preview-title={work.coverTitle || work.title} aria-label={`${viewerLabels.open}${work.title}`} class="block w-full cursor-zoom-in text-left focus-visible:rounded-[1.25rem] focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#ffcf69]">
+                    <img src={work.image ? withBasePath(base, work.image) : placeholderImage} alt={work.coverTitle || work.title} class="block h-auto w-full object-contain" style={work.image ? undefined : `filter: hue-rotate(${index * 48}deg)`} loading="lazy" />
+                  </button>
+                  {work.coverTitle && <span aria-hidden="true" class="pointer-events-none absolute inset-x-3 bottom-3 truncate rounded-b-[1.25rem] bg-[#27223a]/85 px-4 py-3 text-sm font-bold text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 sm:inset-x-4 sm:bottom-4">{work.coverTitle}</span>}
+                </div>
+                <a href={withBasePath(base, albumPath(locale, 'works', work.slug))} class="block p-6 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-[-4px] focus-visible:outline-[#ffcf69] sm:p-7">
                     <p class="text-xs font-bold tracking-[0.15em] text-[#ffcf69]">{work.category}</p><h3 class="mt-2 font-display text-3xl">{work.title}</h3><p class="mt-2 text-sm leading-6 text-[#f3edf5]">{work.note}</p>
-                  </div>
                 </a>
               </article>
             ))}
@@ -160,8 +165,8 @@ const categories = [
           <div class="space-y-6">
             {displayedDaily.map((project, index) => (
               <article class="daily-card group relative grid overflow-hidden rounded-[2rem] bg-[#f4e7dc] md:grid-cols-[.85fr_1.15fr] dark:bg-[#302d40]">
-                <div class="relative overflow-hidden"><img src={project.image ? withBasePath(base, project.image) : placeholderImage} alt={project.title} class="h-full min-h-56 w-full object-cover transition duration-700 group-hover:scale-105" style={project.image ? undefined : `filter: hue-rotate(${index * 48 + 24}deg)`} loading="lazy" />{project.coverTitle && <span aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 truncate bg-[#27223a]/85 px-4 py-3 text-sm font-bold text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">{project.coverTitle}</span>}</div>
-                <div class="flex flex-col justify-between p-7 sm:p-9"><div><h3 class="font-display text-4xl text-[#27223a] dark:text-[#fff6ec]">{project.title}</h3><p class="mt-4 leading-7 text-[#5c566a] dark:text-[#e6dfea]">{project.copy}</p></div><a href={withBasePath(base, albumPath(locale, 'daily', project.slug))} class="after:absolute after:inset-0 mt-8 inline-block font-bold text-[#ef596f] hover:underline focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ef596f]">{page.dailyCardLink}</a></div>
+                <div class="relative overflow-hidden"><button type="button" data-preview-image data-preview-src={project.image ? withBasePath(base, project.image) : placeholderImage} data-preview-title={project.coverTitle || project.title} aria-label={`${viewerLabels.open}${project.title}`} class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-[-4px] focus-visible:outline-[#ef596f]"><img src={project.image ? withBasePath(base, project.image) : placeholderImage} alt={project.coverTitle || project.title} class="h-full min-h-56 w-full object-cover transition duration-700 group-hover:scale-105" style={project.image ? undefined : `filter: hue-rotate(${index * 48 + 24}deg)`} loading="lazy" /></button>{project.coverTitle && <span aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 truncate bg-[#27223a]/85 px-4 py-3 text-sm font-bold text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">{project.coverTitle}</span>}</div>
+                <div class="flex flex-col justify-between p-7 sm:p-9"><div><h3 class="font-display text-4xl text-[#27223a] dark:text-[#fff6ec]"><a href={withBasePath(base, albumPath(locale, 'daily', project.slug))} class="focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#ef596f]">{project.title}</a></h3><p class="mt-4 leading-7 text-[#5c566a] dark:text-[#e6dfea]">{project.copy}</p></div><a href={withBasePath(base, albumPath(locale, 'daily', project.slug))} class="mt-8 inline-block font-bold text-[#ef596f] hover:underline focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ef596f]">{page.dailyCardLink}</a></div>
               </article>
             ))}
           </div>
@@ -177,12 +182,87 @@ const categories = [
       </section>
     </main>
 
+    <dialog id="cover-viewer" aria-label={viewerLabels.dialog} data-actual-label={viewerLabels.actual} data-fit-label={viewerLabels.fit} class="m-auto max-h-[100dvh] max-w-[100vw] overflow-hidden rounded-[1.5rem] border-0 bg-[#27223a] p-0 text-white shadow-2xl backdrop:bg-[#141120]/90">
+      <div class="flex max-h-[100dvh] flex-col">
+        <div class="flex items-center gap-3 px-4 py-3 sm:px-6">
+          <span data-viewer-title class="min-w-0 flex-1 truncate font-bold"></span>
+          <span class="hidden text-xs text-white/70 sm:inline">{viewerLabels.hint}</span>
+          <button type="button" data-viewer-zoom aria-pressed="false" class="shrink-0 rounded-full border border-white/40 px-3 py-2 text-sm font-bold hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{viewerLabels.actual}</button>
+          <button type="button" data-viewer-close class="shrink-0 rounded-full border border-white/40 px-3 py-2 text-sm font-bold hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{viewerLabels.close}</button>
+        </div>
+        <div data-viewer-viewport class="flex h-[calc(100dvh-5rem)] w-[min(96vw,1200px)] items-center justify-center overflow-auto p-4">
+          <img data-viewer-image alt="" draggable="false" class="block max-h-full max-w-full shrink-0 cursor-zoom-in select-none object-contain" />
+        </div>
+      </div>
+    </dialog>
+
     <script>
+      import { canZoomToOriginal } from '../lib/image-viewer.mjs';
       import { gsap } from 'gsap';
       import { ScrollTrigger } from 'gsap/ScrollTrigger';
       gsap.registerPlugin(ScrollTrigger);
       const toggle = document.querySelector<HTMLButtonElement>('#theme-toggle');
       toggle?.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); toggle.textContent = document.documentElement.classList.contains('dark') ? toggle.dataset.lightLabel || '' : toggle.dataset.darkLabel || ''; });
+      const viewer = document.querySelector<HTMLDialogElement>('#cover-viewer');
+      const viewerImage = viewer?.querySelector<HTMLImageElement>('[data-viewer-image]');
+      const viewerTitle = viewer?.querySelector<HTMLElement>('[data-viewer-title]');
+      const viewerViewport = viewer?.querySelector<HTMLElement>('[data-viewer-viewport]');
+      const zoomButton = viewer?.querySelector<HTMLButtonElement>('[data-viewer-zoom]');
+      const closeButton = viewer?.querySelector<HTMLButtonElement>('[data-viewer-close]');
+      let zoomed = false;
+      let opener: HTMLButtonElement | null = null;
+      let previousOverflow = '';
+
+      const setViewerZoom = (requested: boolean) => {
+        if (!viewer || !viewerImage || !viewerViewport || !zoomButton) return;
+        const canZoom = canZoomToOriginal(viewerImage.naturalWidth, viewerImage.naturalHeight, viewerViewport.clientWidth - 32, viewerViewport.clientHeight - 32);
+        zoomed = requested && canZoom;
+        viewerImage.style.width = zoomed ? `${viewerImage.naturalWidth}px` : '';
+        viewerImage.style.height = zoomed ? `${viewerImage.naturalHeight}px` : '';
+        viewerImage.style.maxWidth = zoomed ? 'none' : '';
+        viewerImage.style.maxHeight = zoomed ? 'none' : '';
+        viewerImage.classList.toggle('cursor-zoom-out', zoomed);
+        viewerImage.classList.toggle('cursor-zoom-in', !zoomed);
+        viewerViewport.classList.toggle('items-start', zoomed);
+        viewerViewport.classList.toggle('justify-start', zoomed);
+        viewerViewport.classList.toggle('items-center', !zoomed);
+        viewerViewport.classList.toggle('justify-center', !zoomed);
+        zoomButton.textContent = zoomed ? viewer.dataset.fitLabel || '' : viewer.dataset.actualLabel || '';
+        zoomButton.disabled = !canZoom;
+        zoomButton.setAttribute('aria-pressed', String(zoomed));
+        requestAnimationFrame(() => {
+          viewerViewport.scrollLeft = zoomed ? (viewerViewport.scrollWidth - viewerViewport.clientWidth) / 2 : 0;
+          viewerViewport.scrollTop = zoomed ? (viewerViewport.scrollHeight - viewerViewport.clientHeight) / 2 : 0;
+        });
+      };
+
+      viewerImage?.addEventListener('load', () => setViewerZoom(false));
+      viewerImage?.addEventListener('dblclick', () => setViewerZoom(!zoomed));
+      zoomButton?.addEventListener('click', () => setViewerZoom(!zoomed));
+      closeButton?.addEventListener('click', () => viewer?.close());
+      document.querySelectorAll<HTMLButtonElement>('[data-preview-image]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!viewer || !viewerImage || !viewerTitle || !button.dataset.previewSrc) return;
+          opener = button;
+          viewerTitle.textContent = button.dataset.previewTitle || '';
+          viewerImage.alt = button.dataset.previewTitle || '';
+          viewerImage.src = button.dataset.previewSrc;
+          previousOverflow = document.documentElement.style.overflow;
+          document.documentElement.style.overflow = 'hidden';
+          viewer.showModal();
+          if (viewerImage.complete) setViewerZoom(false);
+          closeButton?.focus();
+        });
+      });
+      viewer?.addEventListener('click', (event) => {
+        if (event.target === viewer) viewer.close();
+      });
+      viewer?.addEventListener('close', () => {
+        document.documentElement.style.overflow = previousOverflow;
+        viewerImage?.removeAttribute('src');
+        opener?.focus();
+        opener = null;
+      });
       gsap.utils.toArray<HTMLElement>('.daily-card').forEach((card) => gsap.fromTo(card, { scale: 0.88, opacity: 0.25 }, { scale: 1, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 88%', end: 'bottom 25%', scrub: 0.6 } }));
       gsap.fromTo('.reveal-text', { opacity: 0.12 }, { opacity: 1, scrollTrigger: { trigger: '.reveal-text', start: 'top 85%', end: 'bottom 50%', scrub: 0.8 } });
     </script>

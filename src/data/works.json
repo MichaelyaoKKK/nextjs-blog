@@ -242,6 +242,10 @@
     "image": "/images/2025/3.jpeg",
     "gallery": [
       {
+        "image": "/images/2025/3.jpeg",
+        "title": "Garden Party@2025"
+      },
+      {
         "image": "/images/2026/The Paradise of Pandas.jpg",
         "title": "Paradise of Pandas@2026"
       },
@@ -258,10 +262,6 @@
         "title": "Monkey king@2025"
       },
       {
-        "image": "/images/2025/3.jpeg",
-        "title": "Garden Party@2025"
-      },
-      {
         "image": "/images/2025/5.jpeg",
         "title": "Sunny Beach Getaway@2025"
       },
@@ -270,12 +270,12 @@
         "title": "Flying fun city@2024"
       },
       {
-        "image": "/images/2024/School project.jpg",
-        "title": "Dream House@2023"
-      },
-      {
         "image": "/images/2023/The ocean of Knowledge.jpeg",
         "title": "The Ocean of Knowledge @2023"
+      },
+      {
+        "image": "/images/2024/School project.jpg",
+        "title": "Dream House@2023"
       },
       {
         "image": "/images/2023/School project Book Jacket.jpg",

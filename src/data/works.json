@@ -100,16 +100,24 @@
         "title": "Ancient Chinese Beauty@2024"
       },
       {
-        "image": "/images/2024/4.jpg",
-        "title": "Sunny Girl@2024"
-      },
-      {
         "image": "/images/2024/7.jpg",
         "title": "Girl with crown@2024"
       },
       {
+        "image": "/images/2024/8.jpeg",
+        "title": "Little Red Riding Hood@2024"
+      },
+      {
         "image": "/images/2026/1.jpeg",
         "title": "Pink Girl@2026"
+      },
+      {
+        "image": "/images/2024/4.jpg",
+        "title": "Sunny Girl@2024"
+      },
+      {
+        "image": "/images/2024/1.jpeg",
+        "title": "Elf Girl@2024"
       },
       {
         "image": "/images/2024/3.jpeg",
@@ -128,14 +136,6 @@
         "title": "Natakuvara@2025"
       },
       {
-        "image": "/images/2026/muxbpxvn-rq5606u1.jpeg",
-        "title": "Girl in the Breeze 1@2025"
-      },
-      {
-        "image": "/images/2025/Mosaic Donation 7.jpeg",
-        "title": "Girl in the Breeze 2@2025"
-      },
-      {
         "image": "/images/2025/Mosaic Donation 10.jpeg",
         "title": "Shin-chan@2025"
       },
@@ -148,20 +148,20 @@
         "title": "Kuromi@2025"
       },
       {
-        "image": "/images/2023/School project Book Jacket.jpg",
-        "title": "Journey to The West@2023"
-      },
-      {
-        "image": "/images/2024/1.jpeg",
-        "title": "Elf Girl@2024"
-      },
-      {
         "image": "/images/2024/5.jpg",
         "title": "Melody@2024"
       },
       {
-        "image": "/images/2024/8.jpeg",
-        "title": "Little Red Riding Hood@2024"
+        "image": "/images/2026/muxbpxvn-rq5606u1.jpeg",
+        "title": "Girl in the Breeze 1@2025"
+      },
+      {
+        "image": "/images/2025/Mosaic Donation 7.jpeg",
+        "title": "Girl in the Breeze 2@2025"
+      },
+      {
+        "image": "/images/2023/School project Book Jacket.jpg",
+        "title": "Journey to The West@2023"
       }
     ]
   },
